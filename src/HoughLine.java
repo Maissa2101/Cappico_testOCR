@@ -52,6 +52,19 @@ public class HoughLine extends Line2D.Float implements Comparable<HoughLine> {
         }
     }
 
+    @Override
+    public String toString() {
+        return "HoughLine{" +
+                "theta=" + theta +
+                ", r=" + r +
+                ", score=" + score +
+                ", x1=" + x1 +
+                ", y1=" + y1 +
+                ", x2=" + x2 +
+                ", y2=" + y2 +
+                '}';
+    }
+
     public int compareTo(HoughLine o) {
         return(this.score-o.score);
     }

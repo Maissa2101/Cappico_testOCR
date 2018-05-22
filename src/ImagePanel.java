@@ -29,11 +29,10 @@ public class ImagePanel extends JPanel {
     @Override
     public void paint(Graphics graphics) {
         super.paint(graphics);
-        System.out.println("lines "+ lines.size());
         if (lines.size()>0) {
-            for (int i =0 ;i<lines.size()-1;i++) {
-               // graphics.drawLine((int)line.x1, (int)line.x2, (int)line.y1, (int)line.y2);
-             // System.out.println(" ("+lines.get(i).x1+","+lines.get(i).y1+") -- ("+ lines.get(i).x2+", "+lines.get(i).y2);
+            for (HoughLine line:lines) {
+                graphics.drawLine((int)line.x1, (int)line.x2, (int)line.y1, (int)line.y2);
+               System.out.println(" ("+line.x1+","+line.y1+") -- ("+ line.x2+", "+line.y2);
             }
         }
     }

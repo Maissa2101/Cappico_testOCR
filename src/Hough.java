@@ -27,9 +27,11 @@ public class Hough {
 
 
     void initialiseHough(int w, int h) {
-        System.out.println(" initialisation hough ...");
 
-        houghWidth = (int) (Math.sqrt(2) * Math.max(h, w)) / 2;
+        System.out.println(" initialisation hough ...");
+        width=w;
+        height=h;
+        houghHeight = (int) (Math.sqrt(2) * Math.max(h, w)) / 2;
         doubleH = 2 * houghHeight;
         houghArray = new int[maxTheta][doubleH];
         centerX = w / 2;
@@ -61,11 +63,13 @@ public class Hough {
 
     void addPoint(int x, int y) {
         for (int t = 0; t < maxTheta; t++) {
+
             int r = (int) (((x - centerX) * cosCache[t]) + ((y - centerY) * sinCache[t]));
             r += houghHeight;
-            if (r < 0 || r >= doubleH) continue;
+            if (r < 0 || r >= doubleH){
+                continue;
+            }
             houghArray[t][r]++;
-
         }
         numPoints++;
     }
@@ -74,17 +78,12 @@ public class Hough {
 
         // Initialise the vector of lines that we'll return
         Vector<HoughLine> lines = new Vector<>(20);
-        System.out.println("je suis dedans");
         // Only proceed if the hough array is not empty
         if (numPoints == 0) return lines;
-        System.out.println(" cest parti ii");
         // Search for local peaks above threshold to draw
         for (int t = 0; t < maxTheta; t++) {
-
             loop:
             for (int r = neighbourhoodSize; r < doubleH - neighbourhoodSize; r++) {
-                System.out.println(" array "+ houghArray[t][r]);
-
                 // Only consider points above threshold
                 if (houghArray[t][r] > threshold) {
 
@@ -106,7 +105,6 @@ public class Hough {
 
                     // calculate the true value of theta
                     double theta = t * thetaStep;
-                    System.out.println(" array "+ houghArray[t][r]);
                     // add the line to the vector
                     lines.add(new HoughLine(theta, r, width, height, houghArray[t][r]));
                 }
