@@ -19,14 +19,18 @@ public class App extends JFrame {
     public static void main(String[] args) {
         /** p r o g r a m m e **/
         App app = new App();
+        ProcessImage processImage = new ProcessImage();
         BufferedImage im = app.loadImage();
-        im = app.seuilImg(im);
+        im = processImage.bAndW(im);
+        app.save(im, "testBW");
+        for(int i =0 ;i<1000000;i++) im = processImage.erosion(im);
+        app.save(im,"testErosion");
         app.transformHough = new Hough();
         app.transformHough.initialiseHough(im.getWidth(), im.getHeight());
         app.transformHough.addPoints(im);
-        Vector<HoughLine> lines = app.transformHough.getLines(5, 25);
+        Vector<HoughLine> lines = app.transformHough.getLines(6, 32);
         //  lines.get(i).
-        app.save(im);
+        app.save(im,null);
         app.imagePanel = new ImagePanel(lines);
         app.initFrame();
         System.out.println(" num points : " + app.transformHough.numPoints);
@@ -86,13 +90,13 @@ public class App extends JFrame {
         gbc.weighty = 0.2;
         frame.setSize(800, 600);
         frame.setMinimumSize(new Dimension(800, 600));
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setVisible(true);
     }
 
     BufferedImage loadImage() {
         try {
-            BufferedImage im = ImageIO.read(new File("/home/excilys/eclipse-workspace/OCR/picture/amin.png"));
+            BufferedImage im = ImageIO.read(new File("/home/excilys/eclipse-workspace/OCR/picture/Amaj.png"));
             return im;
         } catch (IOException e) {
             System.out.println(" no file found");
@@ -102,25 +106,16 @@ public class App extends JFrame {
         }
     }
 
-    BufferedImage seuilImg(BufferedImage im) {
-        System.out.println(" seuillage ...");
 
-        for (int i = 0; i < im.getWidth(); i++) {
-            for (int j = 0; j < im.getHeight(); j++) {
-                im.setRGB(i, j, (-1 * im.getRGB(i, j)));
-                if (im.getRGB(i, j) == 1) {
-                    im.setRGB(i, j, Color.WHITE.getRGB());
-                } else {
-                    im.setRGB(i, j, Color.black.getRGB());
-                }
+    void save(BufferedImage im, String name) {
+        File outputfile;
+        if (name != null) {
+            outputfile = new File(name + ".png");
 
-            }
+        } else {
+            outputfile = new File("image.png");
         }
-        return im;
-    }
 
-    void save(BufferedImage im) {
-        File outputfile = new File("image.png");
         try {
             ImageIO.write(im, "png", outputfile);
         } catch (IOException e) {
