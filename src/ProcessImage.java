@@ -19,23 +19,20 @@ public class ProcessImage {
 
     BufferedImage decoupage(BufferedImage im){
         BufferedImage imchar = new  BufferedImage(maxX-minX,maxY-minY,im.getType());
-        for(int i=minX;i<maxX;i++){
-            for(int j=minY;j<maxY;j++){
-                if(im.getRGB(i,j)==Color.white.getRGB()){
-//                    int color = im.getRGB(i,j);
-//                    int alpha = (color >>> 24) & 0xff;
-//                    int r = (color >> 16) & 0xff;
-//                    int g = (color >> 8) & 0xff ;
-//                    int b = color & 0xff;
-//
-                    imchar.setRGB(i,j,im.getRGB(i,j));
-                }
+        for(int i=0;i<imchar.getWidth();i++){
+            for(int j=0;j<imchar.getHeight();j++){
+                System.out.println(i + " " + j);
+                System.out.println( im.getWidth() +" "+ im.getHeight()+" "+imchar.getWidth()+" "+imchar.getHeight());
+                imchar.setRGB(i,j,im.getRGB(i+minX,j+minY));
+
             }
         }
         return imchar;
     }
 
     void boiteEnglobante(BufferedImage im) {
+        minX = im.getWidth();
+        minY = im.getHeight();
         for (int i = 0; i < im.getWidth(); i++) {
             for (int j = 0; j < im.getHeight(); j++) {
                 if (im.getRGB(i, j) == Color.white.getRGB()) {
@@ -54,6 +51,7 @@ public class ProcessImage {
                 }
             }
         }
+        System.out.println( minX  + " " + minY+" "+maxX+" "+maxY);
     }
 
     BufferedImage erosion(BufferedImage im) {
@@ -61,7 +59,7 @@ public class ProcessImage {
         // parcours une fois tous les pixels si on trouve un pixels qui a un pixels voisin vide
        // System.out.println("erosion ...");
         Kernel kernelErosion = new Kernel(2,2, new float[]{1,1,1,1});
-        ConvolveOp convol= new ConvolveOp(kernelErosion);
+        ConvolveOp convol= new ConvolveOp(kernelErosion, ConvolveOp.EDGE_NO_OP,null);
         BufferedImage imEro= convol.filter(im,null);
         boolean test =false;
         return imEro;
