@@ -21,16 +21,19 @@ public class App extends JFrame {
         App app = new App();
         ProcessImage processImage = new ProcessImage();
         BufferedImage im = app.loadImage();
+        System.out.println("erosion ...");
+        for(int i=0;i<10;i++) im= processImage.erosion(im);
+        app.save(im,"testErosion");
         im = processImage.bAndW(im);
         app.save(im, "testBW");
-        for(int i =0 ;i<1000000;i++) im = processImage.erosion(im);
-        app.save(im,"testErosion");
+        im = processImage.formatageIm(im);
+        app.save(im, "redecoupage");
         app.transformHough = new Hough();
         app.transformHough.initialiseHough(im.getWidth(), im.getHeight());
         app.transformHough.addPoints(im);
         Vector<HoughLine> lines = app.transformHough.getLines(6, 32);
         //  lines.get(i).
-        app.save(im,null);
+        app.save(im, null);
         app.imagePanel = new ImagePanel(lines);
         app.initFrame();
         System.out.println(" num points : " + app.transformHough.numPoints);

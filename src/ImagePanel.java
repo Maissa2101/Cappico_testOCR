@@ -37,7 +37,6 @@ public class ImagePanel extends JPanel {
                     graphics.setColor(Color.RED);
 
                     graphics.drawLine((int) line.x1 +(getWidth()/2-(im.getWidth()/2)), (int) line.y1+(22), (int) line.x2+(getWidth()/2-(im.getWidth()/2)), (int) line.y2+22);
-                    System.out.println(" (" + line.x1 + "," + line.y1 + ") -- (" + line.x2 + ", " + line.y2);
                 }
             }
         }

@@ -1,42 +1,76 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 
 public class ProcessImage {
 
-    int[][] matErosion = {{0, 1, 0}, {1, 1, 1}, {0, 1, 0}};
+    int[][] matErosion = {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}};
+    int maxX, maxY, minY, minX;
 
     BufferedImage formatageIm(BufferedImage im) {
         // on recupere le format ( delimite par une boite englobante ) on la rescale centre et voila
-        List<Integer> imtmp = new ArrayList<>();
+        BufferedImage imchar ;
+        boiteEnglobante(im);
+       imchar = decoupage(im);
+        return imchar;
+    }
 
-        return im;
+    BufferedImage decoupage(BufferedImage im){
+        BufferedImage imchar = new  BufferedImage(maxX-minX,maxY-minY,im.getType());
+        for(int i=minX;i<maxX;i++){
+            for(int j=minY;j<maxY;j++){
+                if(im.getRGB(i,j)==Color.white.getRGB()){
+//                    int color = im.getRGB(i,j);
+//                    int alpha = (color >>> 24) & 0xff;
+//                    int r = (color >> 16) & 0xff;
+//                    int g = (color >> 8) & 0xff ;
+//                    int b = color & 0xff;
+//
+                    imchar.setRGB(i,j,im.getRGB(i,j));
+                }
+            }
+        }
+        return imchar;
+    }
+
+    void boiteEnglobante(BufferedImage im) {
+        for (int i = 0; i < im.getWidth(); i++) {
+            for (int j = 0; j < im.getHeight(); j++) {
+                if (im.getRGB(i, j) == Color.white.getRGB()) {
+                    if (maxX < i) {
+                        maxX = i;
+                    }
+                    if (maxY < j) {
+                        maxY = j;
+                    }
+                    if (minX > i) {
+                        minX = i;
+                    }
+                    if (minY > j) {
+                        minY = j;
+                    }
+                }
+            }
+        }
     }
 
     BufferedImage erosion(BufferedImage im) {
 
         // parcours une fois tous les pixels si on trouve un pixels qui a un pixels voisin vide
-        System.out.println("erosion");
-        for (int i = 0; i < im.getHeight() - 1; i=i+2) {
-            for (int j = 0; j < im.getWidth() - 1; j=j+2) {
-                if (i != 0 || j != 0) {
-                    if (im.getRGB(j, i) == Color.white.getRGB()) {
-                        if (im.getRGB(j - 1, i - 1) == Color.black.getRGB() || im.getRGB(j - 1, i) == Color.black.getRGB() || im.getRGB(j - 1, i + 1) == Color.black.getRGB() || im.getRGB(j, i - 1) == Color.black.getRGB() || im.getRGB(j, i + 1) == Color.black.getRGB() || im.getRGB(j + 1, i - 1) == Color.black.getRGB() || im.getRGB(j + 1, i) == Color.black.getRGB() || im.getRGB(j + 1, i+ 1) == Color.black.getRGB()) {
-                            im.setRGB(j, i, Color.black.getRGB());
-                        }
-                    }
-                }
-            }
-//                   if (im.getRGB(i, j) == Color.white.getRGB()) {
-//                       if (im.getRGB(i - 1, j - 1) == Color.black.getRGB() || im.getRGB(i - 1, j) == Color.black.getRGB() || im.getRGB(i - 1, j + 1) == Color.black.getRGB() || im.getRGB(i, j - 1) == Color.black.getRGB() || im.getRGB(i, j + 1) == Color.black.getRGB() || im.getRGB(i + 1, j - 1) == Color.black.getRGB() || im.getRGB(i + 1, j) == Color.black.getRGB() || im.getRGB(i + 1, j + 1) == Color.black.getRGB()) {
-//                           im.setRGB(i, j, Color.black.getRGB());
-//                       }
-//                   }
-        }
-        return im;
+       // System.out.println("erosion ...");
+        Kernel kernelErosion = new Kernel(2,2, new float[]{1,1,1,1});
+        ConvolveOp convol= new ConvolveOp(kernelErosion);
+        BufferedImage imEro= convol.filter(im,null);
+        boolean test =false;
+        return imEro;
     }
 
+    public static int myColor(int r, int g, int b) {
+        int argb = 0xFF << 24 | r << 16 | g << 8 | b;
+        return argb;
+    }
     BufferedImage bAndW(BufferedImage im) {
         System.out.println(" seuillage ...");
 
