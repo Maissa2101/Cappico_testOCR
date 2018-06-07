@@ -13,46 +13,51 @@ public class App extends JFrame {
     Vector<HoughLine> lines;
 
     public App() {
-
     }
 
     public static void main(String[] args) {
         /** p r o g r a m m e **/
-        App app = new App();
-        ProcessImage processImage = new ProcessImage();
-        BufferedImage im = app.loadImage();
-        System.out.println("erosion ...");
-        for(int i=0;i<10;i++) im= processImage.erosion(im);
-        app.save(im,"testErosion");
-        im = processImage.bAndW(im);
-        app.save(im, "testBW");
-        im = processImage.formatageIm(im);
-        app.save(im, "redecoupage");
-        app.transformHough = new Hough();
-        app.transformHough.initialiseHough(im.getWidth(), im.getHeight());
-        app.transformHough.addPoints(im);
-        Vector<HoughLine> lines = app.transformHough.getLines(6, 32);
-        //  lines.get(i).
-        app.save(im, null);
-        app.imagePanel = new ImagePanel(lines);
-        app.initFrame();
-        System.out.println(" num points : " + app.transformHough.numPoints);
-
+        App app1 = new App();
+        App app2 = new App();
+        app2.applyDetection(1, "mMajtest");
+        System.out.println();
+        System.out.println();
+        app1.applyDetection(2, null);
 
     }
 
     public void setUrl() {
     }
 
-    void initFrame() {
+    void applyDetection(int index,
+                        String namefile) {
+        ProcessImage processImage = new ProcessImage();
+        BufferedImage im = loadImage(namefile);
+        System.out.println("erosion ...");
+        for (int i = 0; i < 10; i++) im = processImage.erosion(im);
+        save(im, "testErosion" + index);
+        im = processImage.bAndW(im);
+        save(im, "testBW" + index);
+        im = processImage.formatageIm(im);
+        save(im, "redecoupage" + index);
+        transformHough = new Hough();
+        transformHough.initialiseHough(im.getWidth(), im.getHeight());
+        transformHough.addPoints(im);
+        Vector<HoughLine> lines = transformHough.getLines(6, 32);
+        lines = reductionLineSimilar(lines);
+        save(im, "image" + index);
+        imagePanel = new ImagePanel(lines, index);
+        initFrame();
+        System.out.println("num points :" + transformHough.numPoints);
+    }
 
+    void initFrame() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /**  M E N U    B A R   **/
         JMenuBar menuBar = new JMenuBar();
         JMenu file = new JMenu("file");
         JMenu edit = new JMenu("edit");
         JMenu help = new JMenu("help");
-
         JMenuItem newAction = new JMenuItem("new");
         JMenuItem loadAction = new JMenuItem("open");
         JMenuItem saveAction = new JMenuItem("save");
@@ -67,7 +72,6 @@ public class App extends JFrame {
         /** P a n n e a u x **/
         JPanel panel1 = new JPanel();
         panel1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Panel 1"));
-
 
         JButton houghAction = new JButton("Hough transform");
         JButton ocrAction = new JButton("Detect");
@@ -97,24 +101,27 @@ public class App extends JFrame {
         frame.setVisible(true);
     }
 
-    BufferedImage loadImage() {
+    BufferedImage loadImage(String nameFile) {
+
         try {
-            BufferedImage im = ImageIO.read(new File("/home/excilys/eclipse-workspace/OCR/picture/Amaj.png"));
+            BufferedImage im;
+            if (nameFile != null) {
+                System.out.println("load " + nameFile + "");
+                im = ImageIO.read(new File("/home/excilys/eclipse-workspace/OCR/picture/" + nameFile + ".png"));
+            } else {
+                im = ImageIO.read(new File("/home/excilys/eclipse-workspace/OCR/picture/mMaj.png"));
+            }
             return im;
         } catch (IOException e) {
             System.out.println(" no file found");
             return null;
-        } finally {
-            System.out.println(" loading file ... ");
         }
     }
-
 
     void save(BufferedImage im, String name) {
         File outputfile;
         if (name != null) {
             outputfile = new File(name + ".png");
-
         } else {
             outputfile = new File("image.png");
         }
@@ -131,6 +138,29 @@ public class App extends JFrame {
     @Override
     public void paintComponents(Graphics graphics) {
         super.paintComponents(graphics);
+    }
 
+    double distance(float valeur1, float valeur2) {
+        return (Math.sqrt(Math.pow(valeur2 - valeur1, 2)));
+    }
+
+    Vector<HoughLine> reductionLineSimilar(Vector<HoughLine> lines) {
+        int i= 0,j=0;
+        System.out.println("  REDUCTION" );
+        System.out.println("lines size"+lines.size() );
+        while(i<lines.size()) {
+            j=0;
+            while(j<lines.size()) {
+                if (lines.get(i) != lines.get(j)) {
+                    if (distance(lines.get(i).x1, lines.get(j).x1) <= 20 && distance(lines.get(i).x2, lines.get(j).x2) <= 20 && distance(lines.get(i).y1, lines.get(j).y1) <= 20 && distance(lines.get(i).y2, lines.get(j).y2) <= 20) {
+                        lines.remove(lines.get(i));
+                        System.out.println("lines remove  "+ lines.size() );
+                    }
+                }
+                j++;
+            }
+            i++;
+        }
+        return lines;
     }
 }
