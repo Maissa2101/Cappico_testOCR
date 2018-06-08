@@ -19,18 +19,20 @@ public class App extends JFrame {
         /** p r o g r a m m e **/
         App app1 = new App();
         App app2 = new App();
-        app2.applyDetection(1, "mMajtest");
+        ValidationChar vc = new ValidationChar();
+        Vector<HoughLine> lineEleve = app2.applyDetection(1, "iMajtest");
         System.out.println();
         System.out.println();
-        app1.applyDetection(2, null);
-
+        Vector<HoughLine> lineRef = app1.applyDetection(2, "iMaj");
+        boolean comparaison = vc.ValidateMaj(lineEleve,lineRef);
+        if(comparaison) System.out.println(" Bon joueé c'est la bonne lettre !! ");
     }
 
     public void setUrl() {
     }
 
-    void applyDetection(int index,
-                        String namefile) {
+    Vector<HoughLine> applyDetection(int index,
+                                     String namefile) {
         ProcessImage processImage = new ProcessImage();
         BufferedImage im = loadImage(namefile);
         System.out.println("erosion ...");
@@ -44,11 +46,12 @@ public class App extends JFrame {
         transformHough.initialiseHough(im.getWidth(), im.getHeight());
         transformHough.addPoints(im);
         Vector<HoughLine> lines = transformHough.getLines(6, 32);
-        lines = reductionLineSimilar(lines);
+      // lines = reductionLineSimilar(lines);
         save(im, "image" + index);
         imagePanel = new ImagePanel(lines, index);
         initFrame();
         System.out.println("num points :" + transformHough.numPoints);
+        return lines;
     }
 
     void initFrame() {
@@ -146,15 +149,12 @@ public class App extends JFrame {
 
     Vector<HoughLine> reductionLineSimilar(Vector<HoughLine> lines) {
         int i= 0,j=0;
-        System.out.println("  REDUCTION" );
-        System.out.println("lines size"+lines.size() );
         while(i<lines.size()) {
             j=0;
             while(j<lines.size()) {
                 if (lines.get(i) != lines.get(j)) {
                     if (distance(lines.get(i).x1, lines.get(j).x1) <= 20 && distance(lines.get(i).x2, lines.get(j).x2) <= 20 && distance(lines.get(i).y1, lines.get(j).y1) <= 20 && distance(lines.get(i).y2, lines.get(j).y2) <= 20) {
                         lines.remove(lines.get(i));
-                        System.out.println("lines remove  "+ lines.size() );
                     }
                 }
                 j++;

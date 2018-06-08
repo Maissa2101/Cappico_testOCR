@@ -31,13 +31,11 @@ public class ImagePanel extends JPanel {
     public void paint(Graphics graphics) {
         super.paint(graphics);
         int i = 0;
-        System.out.println(" paint times !!");
         System.out.println();
         if (lines.size() > 0) {
             for (HoughLine line : lines) {
                 if (line != null) {
                     graphics.setColor(Color.RED);
-                    System.out.println("line " + ++i + " (" + line.x1 + "," + line.y1 + ") (" + line.x2 + "," + line.y2 + ")");
                     graphics.drawLine((int) line.x1 + (getWidth() / 2 - (im.getWidth() / 2)), (int) line.y1 + (22), (int) line.x2 + (getWidth() / 2 - (im.getWidth() / 2)), (int) line.y2 + 22);
                 }
             }
