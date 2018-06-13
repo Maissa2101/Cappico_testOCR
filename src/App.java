@@ -20,12 +20,10 @@ public class App extends JFrame {
         App app1 = new App();
         App app2 = new App();
         ValidationChar vc = new ValidationChar();
-        Vector<HoughLine> lineEleve = app2.applyDetection(1, "iMajtest");
+        //   Vector<HoughLine> lineEleve = app2.applyDetection(1, "mMajtest");
         System.out.println();
         System.out.println();
-        Vector<HoughLine> lineRef = app1.applyDetection(2, "iMaj");
-        boolean comparaison = vc.ValidateMaj(lineEleve,lineRef);
-        if(comparaison) System.out.println(" Bon joueé c'est la bonne lettre !! ");
+        Vector<HoughLine> lineRef = app1.applyDetection(2, "mMaj");
     }
 
     public void setUrl() {
@@ -46,8 +44,9 @@ public class App extends JFrame {
         transformHough.initialiseHough(im.getWidth(), im.getHeight());
         transformHough.addPoints(im);
         Vector<HoughLine> lines = transformHough.getLines(6, 32);
-      // lines = reductionLineSimilar(lines);
+        //lines = reductionLineSimilar(lines);
         save(im, "image" + index);
+        System.out.println(" nb= lines " + lines.size());
         imagePanel = new ImagePanel(lines, index);
         initFrame();
         System.out.println("num points :" + transformHough.numPoints);
@@ -143,24 +142,103 @@ public class App extends JFrame {
         super.paintComponents(graphics);
     }
 
-    double distance(float valeur1, float valeur2) {
-        return (Math.sqrt(Math.pow(valeur2 - valeur1, 2)));
+    double diff(float valeur1, float valeur2) {
+        return (Math.abs(Math.abs(valeur2) - Math.abs(valeur1)));
+    }
+
+    double distancePoints(float x1, float y1, float x2, float y2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
     Vector<HoughLine> reductionLineSimilar(Vector<HoughLine> lines) {
-        int i= 0,j=0;
-        while(i<lines.size()) {
-            j=0;
-            while(j<lines.size()) {
+        int i = 0, j = 0;
+        int epsilon = 50;
+        while (i < lines.size()) {
+            j = i;
+            double m = (lines.get(i).y2 - lines.get(i).y1) / (lines.get(i).x2 - lines.get(i).x1);
+            while (j < lines.size()) {
+                double m2 = (lines.get(j).y2 - lines.get(j).y1) / (lines.get(j).x2 - lines.get(j).x1);
+                // droite sont horizontale
+
                 if (lines.get(i) != lines.get(j)) {
-                    if (distance(lines.get(i).x1, lines.get(j).x1) <= 20 && distance(lines.get(i).x2, lines.get(j).x2) <= 20 && distance(lines.get(i).y1, lines.get(j).y1) <= 20 && distance(lines.get(i).y2, lines.get(j).y2) <= 20) {
-                        lines.remove(lines.get(i));
+                    System.out.println();
+                    System.out.println(ConsoleColor.CYAN + " i =" + i + " j=" + j + ConsoleColor.RESET);
+                    if (compareAngle(m, m2)) {
+                        lines.remove(lines.get(j));
+                        System.out.println(ConsoleColor.GREEN + " Reduction " + ConsoleColor.RESET);
                     }
                 }
+
                 j++;
+
             }
             i++;
         }
+
+        for (HoughLine line : lines) {
+            double m = (line.y2 - line.y1) / (line.x2 - line.x1);
+            if (Double.isInfinite(m)) {
+                m = 999;
+            }
+            double b = line.y1 - m * line.x1;
+            //System.out.println(" Equation y= " + m + " x " + b);
+        }
         return lines;
     }
+
+    boolean compareB(HoughLine line1, HoughLine line2, double m1, double m2) {
+        if (Double.isInfinite(m1)) {
+            m1 = 999;
+        }
+        if (Double.isInfinite(m2)) {
+            m2 = 999;
+        }
+        double b1 = line1.y1 - m1 * line1.x1;
+        line1.b = b1;
+        double b2 = line2.y1 - m1 * line2.x1;
+
+        double diff = b2 - b1;
+        //   System.out.println("");
+
+        System.out.println(ConsoleColor.RED + " diff b " + diff + ConsoleColor.RESET);
+
+        if (diff < 0) {
+            diff = -1 * diff;
+        }
+        if (diff < 50) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    double foundPente(HoughLine line1, HoughLine line2) {
+        return (line1.y2 - line2.y1) / (line1.x2 - line2.x1);
+    }
+
+    boolean compareAngle(double m1, double m2) {
+        double expression1 = Math.abs((m2 - m1) / (1 + m1 * m2));
+        double angle = Math.atan(expression1);
+        System.out.println(" angle diff " + Math.toDegrees(angle));
+
+        if (Math.toDegrees(angle) < 10) return true;
+        else return false;
+    }
+
+    boolean comparePente(double m, double m2) {
+        if (Double.isInfinite(m)) {
+            m = 999;
+        }
+        if (Double.isInfinite(m2)) {
+            m2 = 999;
+        }
+        double diff = m2 - m;
+        if (diff < 15) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
+

@@ -12,7 +12,8 @@ public class HoughLine extends Line2D.Float implements Comparable<HoughLine> {
     protected double theta;
     protected double r;
     protected int score;
-
+    protected  double m;
+    protected double b;
     /**
      * Initialises the hough line
      */
