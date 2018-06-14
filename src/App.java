@@ -20,10 +20,10 @@ public class App extends JFrame {
         App app1 = new App();
         App app2 = new App();
         ValidationChar vc = new ValidationChar();
-        //   Vector<HoughLine> lineEleve = app2.applyDetection(1, "mMajtest");
+        //Vector<HoughLine> lineEleve = app2.applyDetection(1, "mMajtest");
         System.out.println();
         System.out.println();
-        Vector<HoughLine> lineRef = app1.applyDetection(2, "mMaj");
+        Vector<HoughLine> lineRef = app1.applyDetection(2, "iMajtest");
     }
 
     public void setUrl() {
@@ -44,7 +44,7 @@ public class App extends JFrame {
         transformHough.initialiseHough(im.getWidth(), im.getHeight());
         transformHough.addPoints(im);
         Vector<HoughLine> lines = transformHough.getLines(6, 32);
-        //lines = reductionLineSimilar(lines);
+        lines = reductionLineSimilar(lines);
         save(im, "image" + index);
         System.out.println(" nb= lines " + lines.size());
         imagePanel = new ImagePanel(lines, index);
