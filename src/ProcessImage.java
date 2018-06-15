@@ -75,6 +75,7 @@ public class ProcessImage {
         Kernel kernelErosion = new Kernel(2, 2, new float[]{1, 1, 1, 1});
         ConvolveOp convol = new ConvolveOp(kernelErosion, ConvolveOp.EDGE_NO_OP, null);
         BufferedImage imEro = convol.filter(im, null);
+
         boolean test = false;
         return imEro;
     }

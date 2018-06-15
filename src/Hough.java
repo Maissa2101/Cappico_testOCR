@@ -75,9 +75,8 @@ public class Hough {
     }
 
     public Vector<HoughLine> getLines(int n, int threshold) {
-
         // Initialise the vector of lines that we'll return
-        Vector<HoughLine> lines = new Vector<>(20);
+        Vector<HoughLine> lines = new Vector<>(n);
         // Only proceed if the hough array is not empty
         if (numPoints == 0) return lines;
         // Search for local peaks above threshold to draw
@@ -111,7 +110,9 @@ public class Hough {
             }
         }
         Collections.sort(lines, Collections.reverseOrder());
+
         lines.setSize(n);
+        lines.removeIf(houghLine -> houghLine.score<50);
 
 
         return lines;
