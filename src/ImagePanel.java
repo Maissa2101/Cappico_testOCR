@@ -5,20 +5,21 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
+import java.util.List;
 
 public class ImagePanel extends JPanel {
-    protected Vector<HoughLine> lines;
+    protected List<HoughLine> lines;
     int w, h;
     private BufferedImage im = null;
 
-    public ImagePanel(Vector<HoughLine> lines, int index) {
+    public ImagePanel(List<HoughLine> lines, int index) {
         {
             this.lines = lines;
             this.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), " Preview"));
 
             try {
-                im = ImageIO.read(new File("/home/excilys/capico/tests/Cappico_testOCR/image" + index + ".png"));
-                JLabel label = new JLabel(new ImageIcon("/home/excilys/capico/tests/Cappico_testOCR/image" + index + ".png"));
+                im = ImageIO.read(new File("/home/excilys/eclipse-workspace/OCR/image" + index + ".png"));
+                JLabel label = new JLabel(new ImageIcon("/home/excilys/eclipse-workspace/OCR/image" + index + ".png"));
                 this.add(label);
             } catch (IOException e) {
                 System.out.println(" erreur loading image ...");

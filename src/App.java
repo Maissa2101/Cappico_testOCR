@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class App extends JFrame {
@@ -22,16 +24,18 @@ public class App extends JFrame {
         App app1 = new App();
         App app2 = new App();
         ValidationChar vc = new ValidationChar();
-        Vector<HoughLine> lineEleve = app2.applyDetection(1, "Amaj");
+        List<HoughLine> lineEleve = app2.applyDetection(1, "Amaj");
         System.out.println();
         System.out.println();
-        Vector<HoughLine> lineRef = app1.applyDetection(2, "eMaj");
+        List<HoughLine> lineRef = app1.applyDetection(2, "eMaj");
+       app1.validationMaj(lineEleve,lineRef);
+
     }
 
     public void setUrl() {
     }
 
-    Vector<HoughLine> applyDetection(int index,
+    List<HoughLine> applyDetection(int index,
                                      String namefile) {
         ProcessImage processImage = new ProcessImage();
         BufferedImage im = loadImage(namefile);
@@ -45,7 +49,7 @@ public class App extends JFrame {
         transformHough = new Hough();
         transformHough.initialiseHough(im.getWidth(), im.getHeight());
         transformHough.addPoints(im);
-        Vector<HoughLine> lines = transformHough.getLines(10, 32);
+        List<HoughLine> lines = new ArrayList(transformHough.getLines(10, 32));
         lines = reductionLineSimilar(lines);
         save(im, "image" + index);
         System.out.println(" nb= lines " + lines.size());
@@ -111,9 +115,9 @@ public class App extends JFrame {
             BufferedImage im;
             if (nameFile != null) {
                 System.out.println("load " + nameFile + "");
-                im = ImageIO.read(new File("/home/excilys/capico/tests/Cappico_testOCR/picture/" + nameFile + ".png"));
+                im = ImageIO.read(new File("/home/excilys/eclipse-workspace/OCR/picture/" + nameFile + ".png"));
             } else {
-                im = ImageIO.read(new File("/home/excilys/capico/tests/Cappico_testOCR/picture/mMaj.png"));
+                im = ImageIO.read(new File("/home/excilys/eclipse-workspace/OCR/picture/mMaj.png"));
             }
             return im;
         } catch (IOException e) {
@@ -152,32 +156,24 @@ public class App extends JFrame {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
-    Vector<HoughLine> reductionLineSimilar(Vector<HoughLine> lines) {
-        int i = 0, j = 0;
-        int epsilon = 50;
+    List<HoughLine> reductionLineSimilar(List<HoughLine> lines) {
+        int i = 0, j;
         while (i < lines.size()) {
-            j = i+1;
+            j = i + 1;
             double m = (lines.get(i).y2 - lines.get(i).y1) / (lines.get(i).x2 - lines.get(i).x1);
             while (j < lines.size()) {
                 double m2 = (lines.get(j).y2 - lines.get(j).y1) / (lines.get(j).x2 - lines.get(j).x1);
                 // droite sont horizontale
 
                 if (lines.get(i) != lines.get(j)) {
-                    System.out.println();
-                    System.out.println(ConsoleColor.CYAN + " i =" + i + " j=" + j + ConsoleColor.RESET);
 
                     // angle par rapport à l'horizontale
                     double angle = Math.toDegrees(Math.atan((m)));
                     double angle2 = Math.toDegrees(Math.atan((m2)));
 
-                    System.out.println("angle = "+angle);
-                    System.out.println("angle2 = "+angle2);
-
-
-                    if (compareAngle(angle, angle2) && compareB(lines.get(i),lines.get(j),m,m2,Math.max(Math.abs(angle),Math.abs(angle2)))) {
+                    if (compareAngle(angle, angle2) && compareB(lines.get(i), lines.get(j), m, m2, Math.max(Math.abs(angle), Math.abs(angle2)))) {
                         lines.remove(lines.get(j));
-                        j -= 1 ;
-                        System.out.println(ConsoleColor.GREEN + " Reduction " + ConsoleColor.RESET);
+                        j -= 1;
                     }
                 }
 
@@ -187,14 +183,6 @@ public class App extends JFrame {
             i++;
         }
 
-//        for (HoughLine line : lines) {
-//            double m = (line.y2 - line.y1) / (line.x2 - line.x1);
-//            if (Double.isInfinite(m)) {
-//                m = 999;
-//            }
-//            double b = line.y1 - m * line.x1;
-//            //System.out.println(" Equation y= " + m + " x " + b);
-//        }
         return lines;
     }
 
@@ -206,15 +194,10 @@ public class App extends JFrame {
             m2 = 999;
         }
         double b1 = line1.y1 - m1 * line1.x1;
-        line1.b = b1;
         double b2 = line2.y1 - m1 * line2.x1;
-
         double diff = b2 - b1;
-
         diff = Math.abs(diff);
-        System.out.println(ConsoleColor.RED + " diff b " + diff/(angle+1) + ConsoleColor.RESET);
-
-        if (diff <= precision*(angle)) {
+        if (diff <= precision * (angle)) {
             return true;
         } else {
             return false;
@@ -226,11 +209,8 @@ public class App extends JFrame {
     }
 
     boolean compareAngle(double angle, double angle2) {
-
-        System.out.println(" angle diff " + Math.abs(angle-angle2));
-
-        if (Math.abs(angle-angle2) < precision) return true;
-        else if (Math.abs(angle-angle2)>90 && 180-Math.abs(angle-angle2)<precision) return true;
+        if (Math.abs(angle - angle2) < precision) return true;
+        else if (Math.abs(angle - angle2) > 90 && 180 - Math.abs(angle - angle2) < precision) return true;
         else return false;
     }
 
@@ -247,6 +227,42 @@ public class App extends JFrame {
         } else {
             return false;
         }
+    }
+
+   int compareLetter(List<HoughLine> linesP, List<HoughLine> linesM) {
+        System.out.println(" Validation ::");
+        int i = 0, j;
+        int nbValidateLine=0;
+        List<HoughLine> linesMaster = new ArrayList<>();
+        linesMaster.addAll(linesM);
+        while (i < linesP.size()) {
+            j = 0;
+            double m = (linesP.get(i).y2 - linesP.get(i).y1) / (linesP.get(i).x2 - linesP.get(i).x1);
+            while (j < linesMaster.size()) {
+                double m2 = (linesMaster.get(j).y2 - linesMaster.get(j).y1) / (linesMaster.get(j).x2 - linesMaster.get(j).x1);
+                double angle = Math.toDegrees(Math.atan((m)));
+                double angle2 = Math.toDegrees(Math.atan((m2)));
+                if (compareAngle(angle, angle2) && compareB(linesP.get(i), linesMaster.get(j), m, m2, Math.max(Math.abs(angle), Math.abs(angle2)))) {
+                    linesMaster.remove(linesMaster.get(j));
+                    j -= 1;
+                    nbValidateLine++;
+                }
+                j++;
+            }
+            i++;
+        }
+
+        return nbValidateLine;
+    }
+
+    boolean validationMaj(List<HoughLine> linesP, List<HoughLine> linesM){
+
+        int taille_totale = linesM.size();
+       int  nbValidateLine = compareLetter(linesP,linesM);
+
+       double pourcentageValidate= nbValidateLine * 100 / taille_totale;
+        System.out.println(" resulats est "+ConsoleColor.RED+ pourcentageValidate );
+       return false;
     }
 
 }

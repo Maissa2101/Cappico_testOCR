@@ -25,12 +25,11 @@ public class Hough {
     }
 
 
-
     void initialiseHough(int w, int h) {
 
         System.out.println(" initialisation hough ...");
-        width=w;
-        height=h;
+        width = w;
+        height = h;
         houghHeight = (int) (Math.sqrt(2) * Math.max(h, w)) / 2;
         doubleH = 2 * houghHeight;
         houghArray = new int[maxTheta][doubleH];
@@ -66,7 +65,7 @@ public class Hough {
 
             int r = (int) (((x - centerX) * cosCache[t]) + ((y - centerY) * sinCache[t]));
             r += houghHeight;
-            if (r < 0 || r >= doubleH){
+            if (r < 0 || r >= doubleH) {
                 continue;
             }
             houghArray[t][r]++;
@@ -112,7 +111,7 @@ public class Hough {
         Collections.sort(lines, Collections.reverseOrder());
 
         lines.setSize(n);
-        lines.removeIf(houghLine -> houghLine.score<50);
+        lines.removeIf(houghLine -> houghLine.score < 50);
 
 
         return lines;
