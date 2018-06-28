@@ -27,6 +27,7 @@ public class ProcessImage {
         AffineTransform at = new AffineTransform();
         double wScale = (double) w/imchar.getWidth();
         double hScale = (double) h/imchar.getHeight();
+        System.out.println();
         at.scale(wScale, hScale);
         AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
         after = scaleOp.filter(imchar, after);

@@ -2,6 +2,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class App extends JFrame {
     Hough transformHough;
     ImagePanel imagePanel;
     Vector<HoughLine> lines;
-
+    double ecart;
     int precision = 20;
 
     public App() {
@@ -24,12 +25,12 @@ public class App extends JFrame {
         App app1 = new App();
         App app2 = new App();
         ValidationChar vc = new ValidationChar();
-        List<HoughLine> lineEleve = app2.applyDetection(1, "Amaj");
+        List<HoughLine> lineEleve = app2.applyDetection(1, "Atest5");
         System.out.println();
         System.out.println();
-        List<HoughLine> lineRef = app1.applyDetection(2, "eMaj");
-       app1.validationMaj(lineEleve,lineRef);
-
+        List<HoughLine> lineRef = app1.applyDetection(2, "Amaj");
+        double tauxReussite =  app1.compareLetter(lineEleve,lineRef);
+        System.out.println(ConsoleColor.RED+ " taux reussite "+ tauxReussite);
     }
 
     public void setUrl() {
@@ -209,9 +210,19 @@ public class App extends JFrame {
     }
 
     boolean compareAngle(double angle, double angle2) {
-        if (Math.abs(angle - angle2) < precision) return true;
-        else if (Math.abs(angle - angle2) > 90 && 180 - Math.abs(angle - angle2) < precision) return true;
-        else return false;
+        if (Math.abs(angle - angle2) < precision){
+            ecart=(Math.abs(angle-angle2));
+            return true;
+        }
+        else{
+            if (Math.abs(angle - angle2) > 90 && 180 - Math.abs(angle - angle2) < precision){
+                ecart= (180-Math.abs(angle-angle2));
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
     }
 
     boolean comparePente(double m, double m2) {
@@ -229,41 +240,53 @@ public class App extends JFrame {
         }
     }
 
-   int compareLetter(List<HoughLine> linesP, List<HoughLine> linesM) {
+   double compareLetter(List<HoughLine> linesP, List<HoughLine> linesM) {
         System.out.println(" Validation ::");
         int i = 0, j;
-        int nbValidateLine=0;
-        List<HoughLine> linesMaster = new ArrayList<>();
-        linesMaster.addAll(linesM);
-        while (i < linesP.size()) {
+        double nbValidateLine=0;
+
+
+        List<HoughLine> linesRef = new ArrayList<>();
+        List<HoughLine> linesTest = new ArrayList<>();
+
+       if( !(linesP.size()>linesM.size())) {
+           linesRef.addAll(linesM);
+           linesTest.addAll(linesP);
+       }else{
+           linesRef.addAll(linesP);
+           linesTest.addAll(linesM);
+
+       }
+        while (i < linesRef.size()) {
             j = 0;
-            double m = (linesP.get(i).y2 - linesP.get(i).y1) / (linesP.get(i).x2 - linesP.get(i).x1);
-            while (j < linesMaster.size()) {
-                double m2 = (linesMaster.get(j).y2 - linesMaster.get(j).y1) / (linesMaster.get(j).x2 - linesMaster.get(j).x1);
+            double m = (linesRef.get(i).y2 - linesRef.get(i).y1) / (linesRef.get(i).x2 - linesRef.get(i).x1);
+            while (j < linesTest.size()) {
+                double m2 = (linesTest.get(j).y2 - linesTest.get(j).y1) / (linesTest.get(j).x2 - linesTest.get(j).x1);
                 double angle = Math.toDegrees(Math.atan((m)));
                 double angle2 = Math.toDegrees(Math.atan((m2)));
-                if (compareAngle(angle, angle2) && compareB(linesP.get(i), linesMaster.get(j), m, m2, Math.max(Math.abs(angle), Math.abs(angle2)))) {
-                    linesMaster.remove(linesMaster.get(j));
-                    j -= 1;
-                    nbValidateLine++;
+                if (compareAngle(angle, angle2) && compareB(linesRef.get(i), linesTest.get(j), m, m2, Math.max(Math.abs(angle), Math.abs(angle2)))) {
+                    linesRef.remove(linesRef.get(i));
+                    linesTest.remove(linesTest.get(j));
+                    i--;
+                    System.out.println(ConsoleColor.BLUE+" ecart "+ (1-(ecart/100)));
+                    nbValidateLine=(nbValidateLine) + (1-(ecart/100));
+                    break;
+                }else{
+                    j++;
                 }
-                j++;
             }
             i++;
         }
 
-        return nbValidateLine;
+       if((linesP.size()>linesM.size())) {
+           return ((nbValidateLine*100)/linesP.size());
+       }else{
+           return ((nbValidateLine*100)/linesM.size());
+
+       }
+
     }
 
-    boolean validationMaj(List<HoughLine> linesP, List<HoughLine> linesM){
-
-        int taille_totale = linesM.size();
-       int  nbValidateLine = compareLetter(linesP,linesM);
-
-       double pourcentageValidate= nbValidateLine * 100 / taille_totale;
-        System.out.println(" resulats est "+ConsoleColor.RED+ pourcentageValidate );
-       return false;
-    }
 
 }
 
