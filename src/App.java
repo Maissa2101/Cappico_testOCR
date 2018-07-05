@@ -2,7 +2,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,15 +9,18 @@ import java.util.List;
 import java.util.Vector;
 
 public class App extends JFrame {
+
+    static {
+        System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
+        System.loadLibrary("opencv_java342");
+    }
+
     JFrame frame = new JFrame("App");
     Hough transformHough;
     ImagePanel imagePanel;
     Vector<HoughLine> lines;
     double ecart;
     int precision = 20;
-
-    public App() {
-    }
 
     public static void main(String[] args) {
         /** p r o g r a m m e **/
@@ -31,9 +33,8 @@ public class App extends JFrame {
         List<HoughLine> lineRef = app1.applyDetection(2, "Amaj");
         double tauxReussite =  app1.compareLetter(lineEleve,lineRef);
         System.out.println(ConsoleColor.RED+ " taux reussite "+ tauxReussite);
-    }
+        new HoughEllipse().run(args);
 
-    public void setUrl() {
     }
 
     List<HoughLine> applyDetection(int index,
@@ -116,9 +117,9 @@ public class App extends JFrame {
             BufferedImage im;
             if (nameFile != null) {
                 System.out.println("load " + nameFile + "");
-                im = ImageIO.read(new File("/home/excilys/eclipse-workspace/OCR/picture/" + nameFile + ".png"));
+                im = ImageIO.read(new File("/home/excilys/capico-java/Cappico_testOCR/picture/" + nameFile + ".png"));
             } else {
-                im = ImageIO.read(new File("/home/excilys/eclipse-workspace/OCR/picture/mMaj.png"));
+                im = ImageIO.read(new File("/home/excilys/capico-java/Cappico_testOCR/picture/mMaj.png"));
             }
             return im;
         } catch (IOException e) {
