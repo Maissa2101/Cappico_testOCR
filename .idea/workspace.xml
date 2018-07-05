@@ -2,49 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87f9e72f-af1f-4f30-ab41-bedd95bdfa9a" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/src.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HoughEllipse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/description.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/20-polices-manuscrites-amplify.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/20-polices-manuscrites-chocolate-covered-raindrops.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/Acapital.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/Amaj.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/App.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/Atest2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/Atest3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/Atest4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/Atest5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/ConsoleColor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/Hough.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/HoughLine.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/ImagePanel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/LIVcB.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/ProcessImage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/ValidationChar.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/amin.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/aqaM1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/atest.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/depositphotos_157457136-stock-illustration-hand-made-typeface-custom-handwritten.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/eMaj.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/iMaj.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/iMajtest.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/mMaj.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/mMajtest.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/polices-manuscrites-de-calligraphie-oeil-d-un-caractère-moderne-en-cursive-de-calligraphie-de-style-manuscrit-de-brosse-98367679 (1).jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/polices-manuscrites-de-calligraphie-oeil-d-un-caractère-moderne-en-cursive-de-calligraphie-de-style-manuscrit-de-brosse-98367679.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/testEro.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/OCR/testEro.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/picture/depositphotos_157457136-stock-illustration-hand-made-typeface-custom-handwritten.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/picture/deposito.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cappico_testOCR/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cappico_testOCR/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cappico_testOCR/HoughEllipse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cappico_testOCR/HoughEllipse.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ImagePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ImagePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HoughEllipse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HoughEllipse.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="App.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="35" column="37" lean-forward="true" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
+            <state relative-caret-position="380">
+              <caret line="38" column="34" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -68,11 +30,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HoughEllipse.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HoughEllipse.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/HoughEllipse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="26" column="35" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
+            <state relative-caret-position="525">
+              <caret line="38" column="48" selection-start-line="38" selection-start-column="48" selection-end-line="38" selection-end-column="48" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -109,8 +71,8 @@
       <list>
         <option value="$PROJECT_DIR$/src/ImagePanel.java" />
         <option value="$PROJECT_DIR$/src/HoughEllipse2.java" />
-        <option value="$PROJECT_DIR$/src/App.java" />
         <option value="$PROJECT_DIR$/src/HoughEllipse.java" />
+        <option value="$PROJECT_DIR$/src/App.java" />
       </list>
     </option>
   </component>
@@ -527,20 +489,20 @@
     <entry file="file://$PROJECT_DIR$/picture/d.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.java">
+    <entry file="file://$PROJECT_DIR$/src/HoughEllipse.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="35" column="37" lean-forward="true" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
+        <state relative-caret-position="525">
+          <caret line="38" column="48" selection-start-line="38" selection-start-column="48" selection-end-line="38" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HoughEllipse.java">
+    <entry file="file://$PROJECT_DIR$/src/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="26" column="35" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
+        <state relative-caret-position="380">
+          <caret line="38" column="34" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

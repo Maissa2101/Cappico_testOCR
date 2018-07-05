@@ -1,3 +1,5 @@
+import org.opencv.highgui.HighGui;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +35,9 @@ public class App extends JFrame {
         List<HoughLine> lineRef = app1.applyDetection(2, "Amaj");
         double tauxReussite =  app1.compareLetter(lineEleve,lineRef);
         System.out.println(ConsoleColor.RED+ " taux reussite "+ tauxReussite);
-        new HoughEllipse().run(args);
+        new HoughEllipse().run("o2");
+        new HoughEllipse().run("o3");
+        HighGui.waitKey();
 
     }
 

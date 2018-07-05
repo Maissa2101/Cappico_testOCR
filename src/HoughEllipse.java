@@ -6,15 +6,16 @@ import org.opencv.imgproc.Imgproc;
 
 class HoughEllipse {
 
-    public void run(String[] args) {
-        String default_file = "/home/excilys/capico-java/Cappico_testOCR/picture/o3.png";
+    public void run(String name) {
 
-        Mat src = Imgcodecs.imread(default_file, Imgcodecs.IMREAD_COLOR);
+        String file = "/home/excilys/capico-java/Cappico_testOCR/picture/" + name + ".png";
+
+        Mat src = Imgcodecs.imread(file, Imgcodecs.IMREAD_COLOR);
 
         if( src.empty() ) {
             System.out.println("Error opening image!");
             System.out.println("Program Arguments: [image_name -- default "
-                    + default_file +"] \n");
+                    + file +"] \n");
             System.exit(-1);
         }
 
@@ -24,7 +25,7 @@ class HoughEllipse {
         Mat circles = new Mat();
         Imgproc.HoughCircles(gray, circles, Imgproc.HOUGH_GRADIENT, 1.0,
                 (double)gray.rows()/16, // change this value to detect circles with different distances to each other
-                100.0, 30.0, 1, 220); // change the last two parameters
+                100.0, 30.0, 1, 200); // change the last two parameters
         // (min_radius & max_radius) to detect larger circles
         for (int x = 0; x < circles.cols(); x++) {
             double[] c = circles.get(0, x);
@@ -35,9 +36,8 @@ class HoughEllipse {
             int radius = (int) Math.round(c[2]);
             Imgproc.circle(src, center, radius, new Scalar(255,0,255), 3, 8, 0 );
         }
-        HighGui.imshow("detected circles", src);
-        HighGui.waitKey();
-        System.exit(0);
+        HighGui.imshow("detected circles" + name, src);
+
     }
 }
 
