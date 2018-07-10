@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import static org.opencv.imgcodecs.Imgcodecs.imwrite;
+
 public class App extends JFrame {
 
     static {
@@ -29,20 +31,17 @@ public class App extends JFrame {
         App app1 = new App();
         App app2 = new App();
         ValidationChar vc = new ValidationChar();
-        List<HoughLine> lineEleve = app2.applyDetection(1, "Atest5");
+        List<HoughLine> lineEleve = app2.applyDetection(1, "p");
         System.out.println();
         System.out.println();
-        List<HoughLine> lineRef = app1.applyDetection(2, "Amaj");
+        List<HoughLine> lineRef = app1.applyDetection(2, "p2");
         double tauxReussite =  app1.compareLetter(lineEleve,lineRef);
-        System.out.println(ConsoleColor.RED+ " taux reussite "+ tauxReussite);
-        new HoughEllipse().run("o2");
-        new HoughEllipse().run("o3");
-        HighGui.waitKey();
-
+        System.out.println(ConsoleColor.RED + " taux de réussite "+ tauxReussite);
+        app1.applyDetectionCircle(1,"p");
+        app2.applyDetectionCircle(2,"p2");
     }
 
-    List<HoughLine> applyDetection(int index,
-                                     String namefile) {
+    List<HoughLine> applyDetection(int index, String namefile) {
         ProcessImage processImage = new ProcessImage();
         BufferedImage im = loadImage(namefile);
         System.out.println("erosion ...");
@@ -65,9 +64,23 @@ public class App extends JFrame {
         return lines;
     }
 
+    void applyDetectionCircle(int index, String namefile) {
+        ProcessImage processImage = new ProcessImage();
+        BufferedImage im = loadImage(namefile);
+       /* System.out.println("erosion ...");
+        for (int i = 0; i < 10; i++) im = processImage.erosion(im);
+        save(im, "testErosion" + index);
+        im = processImage.bAndW(im);
+        save(im, "testBW" + index);*/
+        im = processImage.formatageImCircle(im);
+        save(im, "redecoupage" + index);
+        BufferedImage imCircle = new HoughEllipse().run("redecoupage"+index);
+        save(imCircle,"testCircle"+index);
+    }
+
     void initFrame() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        /**  M E N U    B A R   **/
+        /**  M E N U  B A R   **/
         JMenuBar menuBar = new JMenuBar();
         JMenu file = new JMenu("file");
         JMenu edit = new JMenu("edit");
@@ -96,7 +109,7 @@ public class App extends JFrame {
         panel1.add(houghAction);
         panel1.add(ocrAction);
 
-        /*** C A N V A S**/
+        /** C A N V A S **/
         frame.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
@@ -230,7 +243,7 @@ public class App extends JFrame {
         }
     }
 
-    boolean comparePente(double m, double m2) {
+        boolean comparePente(double m, double m2) {
         if (Double.isInfinite(m)) {
             m = 999;
         }
@@ -273,7 +286,7 @@ public class App extends JFrame {
                     linesRef.remove(linesRef.get(i));
                     linesTest.remove(linesTest.get(j));
                     i--;
-                    System.out.println(ConsoleColor.BLUE+" ecart "+ (1-(ecart/100)));
+                    System.out.println(ConsoleColor.BLUE+" écart "+ (1-(ecart/100)));
                     nbValidateLine=(nbValidateLine) + (1-(ecart/100));
                     break;
                 }else{
