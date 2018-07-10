@@ -1,3 +1,4 @@
+import org.opencv.core.Core;
 import org.opencv.highgui.HighGui;
 
 import javax.imageio.ImageIO;
@@ -13,8 +14,7 @@ import java.util.Vector;
 public class App extends JFrame {
 
     static {
-        System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
-        System.loadLibrary("opencv_java342");
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
     JFrame frame = new JFrame("App");
@@ -29,20 +29,18 @@ public class App extends JFrame {
         App app1 = new App();
         App app2 = new App();
         ValidationChar vc = new ValidationChar();
-        List<HoughLine> lineEleve = app2.applyDetection(1, "Atest5");
+        List<HoughLine> lineEleve = app2.applyDetectionLine(1, "Atest5");
         System.out.println();
         System.out.println();
-        List<HoughLine> lineRef = app1.applyDetection(2, "Amaj");
+        List<HoughLine> lineRef = app1.applyDetectionLine(2, "Amaj");
         double tauxReussite =  app1.compareLetter(lineEleve,lineRef);
         System.out.println(ConsoleColor.RED+ " taux reussite "+ tauxReussite);
-        new HoughEllipse().run("o2");
-        new HoughEllipse().run("o3");
-        HighGui.waitKey();
-
+        app1.applyDetectionCircle(1,"o2");
+        app2.applyDetectionCircle(2,"o3");
     }
 
-    List<HoughLine> applyDetection(int index,
-                                     String namefile) {
+    List<HoughLine> applyDetectionLine(int index,
+                                        String namefile) {
         ProcessImage processImage = new ProcessImage();
         BufferedImage im = loadImage(namefile);
         System.out.println("erosion ...");
@@ -64,7 +62,19 @@ public class App extends JFrame {
         System.out.println("num points :" + transformHough.numPoints);
         return lines;
     }
-
+    void applyDetectionCircle(int index, String namefile) {
+        ProcessImage processImage = new ProcessImage();
+        BufferedImage im = loadImage(namefile);
+       /* System.out.println("erosion ...");
+        for (int i = 0; i < 10; i++) im = processImage.erosion(im);
+        save(im, "testErosion" + index);
+        im = processImage.bAndW(im);
+        save(im, "testBW" + index);*/
+        im = processImage.formatageImCircle(im);
+        save(im, "redecoupage" + index);
+        BufferedImage imCircle =new HoughEllipse().run("redecoupage"+index);
+        save(imCircle,"testCircle"+index);
+    }
     void initFrame() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /**  M E N U    B A R   **/
@@ -121,9 +131,9 @@ public class App extends JFrame {
             BufferedImage im;
             if (nameFile != null) {
                 System.out.println("load " + nameFile + "");
-                im = ImageIO.read(new File("/home/excilys/capico-java/Cappico_testOCR/picture/" + nameFile + ".png"));
+                im = ImageIO.read(new File("/home/excilys/eclipse-workspace/OCR/picture/" + nameFile + ".png"));
             } else {
-                im = ImageIO.read(new File("/home/excilys/capico-java/Cappico_testOCR/picture/mMaj.png"));
+                im = ImageIO.read(new File("/home/excilys/eclipse-workspace/OCR/picture/.png"));
             }
             return im;
         } catch (IOException e) {

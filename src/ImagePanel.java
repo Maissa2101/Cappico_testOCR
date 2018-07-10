@@ -18,8 +18,8 @@ public class ImagePanel extends JPanel {
             this.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), " Preview"));
 
             try {
-                im = ImageIO.read(new File("/home/excilys/capico-java/Cappico_testOCR/image" + index + ".png"));
-                JLabel label = new JLabel(new ImageIcon("/home/excilys/capico-java/Cappico_testOCR/image" + index + ".png"));
+                im = ImageIO.read(new File("/home/excilys/eclipse-workspace/OCR/image" + index + ".png"));
+                JLabel label = new JLabel(new ImageIcon("//home/excilys/eclipse-workspace/OCR/image" + index + ".png"));
                 this.add(label);
             } catch (IOException e) {
                 System.out.println(" erreur loading image ...");

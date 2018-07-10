@@ -9,7 +9,7 @@ public class ProcessImage {
 
     int[][] matErosion = {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}};
     int maxX, maxY, minY, minX;
-
+    int maxXC, maxYC, minYC, minXC;
     public static int myColor(int r, int g, int b) {
         int argb = 0xFF << 24 | r << 16 | g << 8 | b;
         return argb;
@@ -20,6 +20,24 @@ public class ProcessImage {
         BufferedImage imchar;
         boiteEnglobante(im);
         imchar = decoupage(im);
+
+        int w = 300;
+        int h = 300;
+        BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        AffineTransform at = new AffineTransform();
+        double wScale = (double) w/imchar.getWidth();
+        double hScale = (double) h/imchar.getHeight();
+        System.out.println();
+        at.scale(wScale, hScale);
+        AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+        after = scaleOp.filter(imchar, after);
+        return after;
+    }
+    BufferedImage formatageImCircle(BufferedImage im) {
+        // on recupere le format ( delimite par une boite englobante ) on la rescale centre et voila
+        BufferedImage imchar;
+        boiteEnglobanteCircle(im);
+        imchar = decoupageCircle(im);
 
         int w = 300;
         int h = 300;
@@ -44,7 +62,16 @@ public class ProcessImage {
         }
         return imchar;
     }
+    BufferedImage decoupageCircle(BufferedImage im) {
+        BufferedImage imchar = new BufferedImage(maxXC - minXC, maxYC - minYC, im.getType());
+        for (int i = 0; i < imchar.getWidth(); i++) {
+            for (int j = 0; j < imchar.getHeight(); j++) {
+                imchar.setRGB(i, j, im.getRGB(i + minXC, j + minYC));
 
+            }
+        }
+        return imchar;
+    }
     void boiteEnglobante(BufferedImage im) {
         minX = im.getWidth();
         minY = im.getHeight();
@@ -67,6 +94,28 @@ public class ProcessImage {
             }
         }
         System.out.println(minX + " " + minY + " " + maxX + " " + maxY);
+    }
+    void boiteEnglobanteCircle(BufferedImage im) {
+        minXC = im.getWidth();
+        minYC = im.getHeight();
+        for (int i = 0; i < im.getWidth(); i++) {
+            for (int j = 0; j < im.getHeight(); j++) {
+                if (im.getRGB(i, j) == Color.BLACK.getRGB()) {
+                    if (maxXC < i) {
+                        maxXC = i;
+                    }
+                    if (maxYC < j) {
+                        maxYC = j;
+                    }
+                    if (minXC > i) {
+                        minXC = i;
+                    }
+                    if (minYC > j) {
+                        minYC = j;
+                    }
+                }
+            }
+        }
     }
 
     BufferedImage erosion(BufferedImage im) {
