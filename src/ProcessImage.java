@@ -139,7 +139,7 @@ public class ProcessImage {
     }
 
     BufferedImage bAndW(BufferedImage im) {
-        System.out.println(" seuillage ...");
+        System.out.println("Seuillage ...");
 
         for (int i = 0; i < im.getWidth(); i++) {
             for (int j = 0; j < im.getHeight(); j++) {

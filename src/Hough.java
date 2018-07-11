@@ -26,8 +26,7 @@ public class Hough {
 
 
     void initialiseHough(int w, int h) {
-
-        System.out.println(" initialisation hough ...");
+        System.out.println("Initialisation hough ...");
         width = w;
         height = h;
         houghHeight = (int) (Math.sqrt(2) * Math.max(h, w)) / 2;
@@ -47,7 +46,7 @@ public class Hough {
     }
 
     void addPoints(BufferedImage im) {
-        System.out.println(" ajout des points  .... ");
+        System.out.println("Ajout des points  .... ");
 
         width = im.getWidth();
         height = im.getHeight();

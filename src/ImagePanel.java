@@ -22,7 +22,7 @@ public class ImagePanel extends JPanel {
                 JLabel label = new JLabel(new ImageIcon("/home/excilys/capico-java/Cappico_testOCR/image" + index + ".png"));
                 this.add(label);
             } catch (IOException e) {
-                System.out.println(" erreur loading image ...");
+                System.out.println("Erreur loading image ...");
             }
             repaint();
         }

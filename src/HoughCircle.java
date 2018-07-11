@@ -46,8 +46,8 @@ class HoughCircle {
             listRadius.add(radius);
         }
         reductionCircleSimilar(precision);
-        System.out.println(ConsoleColor.PURPLE_BOLD + " size Center " + listCenter.size());
-        System.out.println(ConsoleColor.PURPLE_BOLD + " size Radius " + listRadius.size()+ConsoleColor.RESET);
+        System.out.println(ConsoleColor.PURPLE_BOLD + "size Center " + listCenter.size());
+        System.out.println(ConsoleColor.PURPLE_BOLD + "size Radius " + listRadius.size()+ConsoleColor.RESET);
         for (int x = 0; x < listRadius.size(); x++) {
             // circle center
             Imgproc.circle(src, listCenter.get(x), 1, new Scalar(0,100,100), 3, 8, 0 );

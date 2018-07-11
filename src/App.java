@@ -32,14 +32,14 @@ public class App extends JFrame {
         App app1 = new App();
         App app2 = new App();
         ValidationChar vc = new ValidationChar();
-                List<HoughLine> lineEleve = app2.applyDetection(1, "p");
+        List<HoughLine> lineEleve = app2.applyDetection(1, "p");
         System.out.println();
         System.out.println();
         List<HoughLine> lineRef = app1.applyDetection(2, "p2");
         double tauxReussite =  app1.compareLetter(lineEleve,lineRef);
-        System.out.println(ConsoleColor.RED + " taux de réussite "+ tauxReussite);
-        app1.applyDetectionCircle(1,"p");
-        app2.applyDetectionCircle(2,"p2");
+        System.out.println(ConsoleColor.RED + "taux de réussite "+ tauxReussite);
+        app1.applyDetectionCircle(1,"amin");
+        app2.applyDetectionCircle(2,"o3");
     }
 
     List<HoughLine> applyDetection(int index, String namefile) {
@@ -82,7 +82,7 @@ public class App extends JFrame {
 
     void initFrame() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        /**  M E N U  B A R   **/
+
         JMenuBar menuBar = new JMenuBar();
         JMenu file = new JMenu("file");
         JMenu edit = new JMenu("edit");
@@ -98,7 +98,7 @@ public class App extends JFrame {
         menuBar.add(help);
         frame.add(menuBar);
         frame.setJMenuBar(menuBar);
-        /** P a n n e a u x **/
+
         JPanel panel1 = new JPanel();
         panel1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Panel 1"));
 
@@ -111,7 +111,7 @@ public class App extends JFrame {
         panel1.add(houghAction);
         panel1.add(ocrAction);
 
-        /** C A N V A S **/
+
         frame.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
@@ -142,7 +142,7 @@ public class App extends JFrame {
             }
             return im;
         } catch (IOException e) {
-            System.out.println(" no file found");
+            System.out.println("no file found");
             return null;
         }
     }
@@ -158,9 +158,9 @@ public class App extends JFrame {
         try {
             ImageIO.write(im, "png", outputfile);
         } catch (IOException e) {
-            System.out.println(" error save image");
+            System.out.println("error save image");
         } finally {
-            System.out.println(" save file ... ");
+            System.out.println("save file ... ");
         }
     }
 
@@ -259,7 +259,7 @@ public class App extends JFrame {
     }
 
    double compareLetter(List<HoughLine> linesP, List<HoughLine> linesM) {
-        System.out.println(" Validation :");
+        System.out.println("Validation :");
         int i = 0, j;
         double nbValidateLine=0;
 
@@ -286,7 +286,7 @@ public class App extends JFrame {
                     linesRef.remove(linesRef.get(i));
                     linesTest.remove(linesTest.get(j));
                     i--;
-                    System.out.println(ConsoleColor.BLUE+" écart "+ (1-(ecart/100)));
+                    System.out.println(ConsoleColor.BLUE+"écart "+ (1-(ecart/100)));
                     nbValidateLine=(nbValidateLine) + (1-(ecart/100));
                     break;
                 }else{
