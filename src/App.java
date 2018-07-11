@@ -1,5 +1,3 @@
-import org.opencv.highgui.HighGui;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -9,8 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-
-import static org.opencv.imgcodecs.Imgcodecs.imwrite;
 
 public class App extends JFrame {
 
@@ -57,10 +53,10 @@ public class App extends JFrame {
         List<HoughLine> lines = new ArrayList(transformHough.getLines(10, 32));
         lines = reductionLineSimilar(lines);
         save(im, "image" + index);
-        System.out.println(" nb= lines " + lines.size());
+        System.out.println("nb of lines " + lines.size());
         imagePanel = new ImagePanel(lines, index);
         initFrame();
-        System.out.println("num points :" + transformHough.numPoints);
+        System.out.println("nb of points :" + transformHough.numPoints);
         return lines;
     }
 
@@ -75,7 +71,7 @@ public class App extends JFrame {
         im = processImage.formatageImCircle(im);
         save(im, "redecoupage" + index);
         BufferedImage imCircle = new HoughEllipse().run("redecoupage"+index);
-        save(imCircle,"testCircle"+index);
+        save(imCircle,"testCircle"+ index);
     }
 
     void initFrame() {
@@ -195,9 +191,7 @@ public class App extends JFrame {
                         j -= 1;
                     }
                 }
-
                 j++;
-
             }
             i++;
         }
@@ -259,7 +253,7 @@ public class App extends JFrame {
     }
 
    double compareLetter(List<HoughLine> linesP, List<HoughLine> linesM) {
-        System.out.println(" Validation ::");
+        System.out.println(" Validation :");
         int i = 0, j;
         double nbValidateLine=0;
 

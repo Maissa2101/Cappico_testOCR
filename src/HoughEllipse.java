@@ -9,8 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 class HoughEllipse {
 
@@ -22,8 +20,7 @@ class HoughEllipse {
 
         if( src.empty() ) {
             System.out.println("Error opening image!");
-            System.out.println("Program Arguments: [image_name -- default "
-                    + file +"] \n");
+            System.out.println("Program Arguments: [image_name -- default " + file +"] \n");
             System.exit(-1);
         }
 
@@ -33,7 +30,7 @@ class HoughEllipse {
         Mat circles = new Mat();
         Imgproc.HoughCircles(gray, circles, Imgproc.HOUGH_GRADIENT, 1.0,
                 (double)gray.rows()/16, // change this value to detect circles with different distances to each other
-                100.0, 30.0, 1, 110); // change the last two parameters
+                100.0, 30.0, 1, 100 ); // change the last two parameters
         // (min_radius & max_radius) to detect larger circles
         for (int x = 0; x < circles.cols(); x++) {
             double[] c = circles.get(0, x);

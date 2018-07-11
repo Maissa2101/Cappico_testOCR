@@ -2,32 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87f9e72f-af1f-4f30-ab41-bedd95bdfa9a" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/picture/image1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/picture/image2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/picture/testErosion1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/picture/testErosion2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image2.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cappico_testOCR/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cappico_testOCR/App.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cappico_testOCR/HoughEllipse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cappico_testOCR/HoughEllipse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cappico_testOCR/ProcessImage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cappico_testOCR/ProcessImage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/picture/20-polices-manuscrites-amplify.png" beforeDir="false" afterPath="$PROJECT_DIR$/picture/phrase1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/picture/20-polices-manuscrites-chocolate-covered-raindrops.png" beforeDir="false" afterPath="$PROJECT_DIR$/picture/phrase2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/picture/d.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/picture/d.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/picture/deposito.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/picture/deposito.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/picture/polices-manuscrites-de-calligraphie-oeil-d-un-caractère-moderne-en-cursive-de-calligraphie-de-style-manuscrit-de-brosse-98367679 (1).jpg" beforeDir="false" afterPath="$PROJECT_DIR$/picture/lettres.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/picture/polices-manuscrites-de-calligraphie-oeil-d-un-caractère-moderne-en-cursive-de-calligraphie-de-style-manuscrit-de-brosse-98367679.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/picture/lett2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/picture/test.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/redecoupage1.png" beforeDir="false" afterPath="$PROJECT_DIR$/redecoupage1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redecoupage2.png" beforeDir="false" afterPath="$PROJECT_DIR$/redecoupage2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/picture/D.png" beforeDir="false" afterPath="$PROJECT_DIR$/picture/D.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/picture/aqaM1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/picture/d.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/picture/ddd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/picture/deposito.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/picture/lett2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/picture/phrase1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/picture/phrase2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/picture/testEro.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/picture/testEro.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HoughEllipse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HoughEllipse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ProcessImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testBW1.png" beforeDir="false" afterPath="$PROJECT_DIR$/testBW1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testBW2.png" beforeDir="false" afterPath="$PROJECT_DIR$/testBW2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testErosion1.png" beforeDir="false" afterPath="$PROJECT_DIR$/testErosion1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testErosion2.png" beforeDir="false" afterPath="$PROJECT_DIR$/testErosion2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testCircle1.png" beforeDir="false" afterPath="$PROJECT_DIR$/testCircle1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testCircle2.png" beforeDir="false" afterPath="$PROJECT_DIR$/testCircle2.png" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,11 +36,8 @@
       <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="40" column="39" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="39" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="405">
+              <caret line="56" column="29" selection-start-line="56" selection-start-column="29" selection-end-line="56" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -57,11 +45,8 @@
       <file leaf-file-name="HoughEllipse.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/HoughEllipse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="48" column="81" selection-start-line="48" selection-start-column="81" selection-end-line="48" selection-end-column="81" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="216">
+              <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -71,13 +56,9 @@
           <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
-      <file leaf-file-name="ProcessImage.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ProcessImage.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="935">
-              <caret line="106" selection-start-line="106" selection-end-line="106" />
-            </state>
-          </provider>
+      <file leaf-file-name="testCircle2.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testCircle2.png">
+          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
     </leaf>
@@ -101,6 +82,12 @@
       <find>Img</find>
       <find>save</find>
       <find>ecart</find>
+      <find>erosion</find>
+      <find>testCi</find>
+      <find>Validation</find>
+      <find>paintComponents</find>
+      <find>testL</find>
+      <find>testLines</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -109,11 +96,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/ImagePanel.java" />
         <option value="$PROJECT_DIR$/src/HoughEllipse2.java" />
         <option value="$PROJECT_DIR$/src/ProcessImage.java" />
-        <option value="$PROJECT_DIR$/src/App.java" />
         <option value="$PROJECT_DIR$/src/HoughEllipse.java" />
+        <option value="$PROJECT_DIR$/src/ImagePanel.java" />
+        <option value="$PROJECT_DIR$/src/App.java" />
       </list>
     </option>
   </component>
@@ -140,10 +127,6 @@
               <item name="Cappico_testOCR" type="b2602c69:ProjectViewProjectNode" />
               <item name="Cappico_testOCR" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Cappico_testOCR" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -254,7 +237,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="27" width="1922" height="1174" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -262,15 +244,15 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.340625" side_tool="true" visible="true" weight="0.32983795" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.34114584" side_tool="true" weight="0.32983795" />
       <window_info anchor="right" id="Maven Projects" order="6" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.659375" weight="0.32983795" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6588542" weight="0.32910156" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="right" id="Coverage" side_tool="true" weight="0.3296875" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="3" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18177083" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18128343" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
@@ -284,28 +266,40 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
     </layout>
+    <layout-to-restore>
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6588542" weight="0.32983795" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18177083" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Theme Preview" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49947917" weight="0.39942804" />
+      <window_info anchor="right" id="Maven Projects" order="7" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.34114584" side_tool="true" visible="true" weight="0.32983795" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.48958334" weight="0.32983795" />
+      <window_info anchor="right" id="Coverage" order="0" side_tool="true" weight="0.3296875" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/picture/Amaj.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/picture/phrase2.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/picture/Atest5.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/picture/eMaj.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/picture/d.png" />
-    <entry file="file://$PROJECT_DIR$/picture/mMajtest.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/picture/test.png" />
     <entry file="file://$PROJECT_DIR$/picture/o3.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -316,9 +310,6 @@
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/picture/deposito.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/picture/lett1.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/picture/lett2.jpg">
@@ -349,15 +340,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testErosion2.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/OCR.iml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/redecoupage2.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/picture/aqaM1.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -365,12 +347,6 @@
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/picture/D.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/picture/d.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/picture/iMaj.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/picture/LIVcB.png">
@@ -382,23 +358,6 @@
     <entry file="file://$PROJECT_DIR$/picture/p.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HoughLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-345">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ImagePanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-120">
-          <caret line="9" column="31" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/redecoupage1.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/testBW1.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -408,32 +367,10 @@
     <entry file="file://$PROJECT_DIR$/testBW2.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/testErosion1.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/picture/image2.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/picture/image1.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ProcessImage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="106" selection-start-line="106" selection-end-line="106" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/image1.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/image2.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/picture/testErosion2.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/picture/testErosion1.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ConsoleColor.java">
@@ -450,13 +387,93 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.java">
+    <entry file="file://$PROJECT_DIR$/OCR.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/picture/ddd.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/picture/d.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/picture/eMaj.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/picture/image1.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/picture/iMaj.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/picture/iMajtest.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/picture/lett1.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/redecoupage2.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/picture/testErosion2.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image1.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/redecoupage1.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Hough.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="40" column="39" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="39" />
+        <state relative-caret-position="-151">
+          <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testLines2.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testLines1.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ProcessImage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-939">
+          <caret line="39" column="35" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testErosion1.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testErosion2.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/picture/testErosion1.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HoughLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="27" column="36" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/awt/Component.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="3306" column="13" lean-forward="true" selection-start-line="3306" selection-start-column="13" selection-end-line="3306" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#114480#114481#0" expanded="true" />
+            <element signature="e#114527#114528#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ImagePanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -466,13 +483,17 @@
     <entry file="file://$PROJECT_DIR$/testCircle1.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="56" column="29" selection-start-line="56" selection-start-column="29" selection-end-line="56" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/HoughEllipse.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="48" column="81" selection-start-line="48" selection-start-column="81" selection-end-line="48" selection-end-column="81" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="216">
+          <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
         </state>
       </provider>
     </entry>
