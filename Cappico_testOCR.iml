@@ -7,8 +7,31 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/opencv-3.4.1/build/bin/opencv-341.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/opencv-3.4.1/build/bin/opencv-341.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/opencv-3.4.1/build/bin/opencv-341.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/opencv-3.4.1/build/configured/modules/java/generator/android/java" />
+          <root url="file://$USER_HOME$/opencv-3.4.1/build/configured/modules/java/generator/src/java" />
+          <root url="jar://$USER_HOME$/opencv-3.4.1/build/bin/opencv-341.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntry type="library" exported="" name="lib" level="project" />
-    <orderEntry type="library" exported="" name="opencv-341" level="project" />
     <orderEntry type="library" name="src" level="project" />
   </component>
 </module>
