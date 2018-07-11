@@ -1,4 +1,5 @@
 import org.opencv.core.Core;
+import org.opencv.core.Point;
 import org.opencv.highgui.HighGui;
 
 import javax.imageio.ImageIO;
@@ -12,7 +13,8 @@ import java.util.List;
 import java.util.Vector;
 
 public class App extends JFrame {
-
+    List<Point> listCenter= new ArrayList<>();
+    List<Integer> listRadius= new ArrayList<>();
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
@@ -22,7 +24,7 @@ public class App extends JFrame {
     ImagePanel imagePanel;
     Vector<HoughLine> lines;
     double ecart;
-    int precision = 20;
+    static final int  precision = 20;
 
     public static void main(String[] args) {
         /** p r o g r a m m e **/
@@ -35,8 +37,9 @@ public class App extends JFrame {
         List<HoughLine> lineRef = app1.applyDetectionLine(2, "Amaj");
         double tauxReussite =  app1.compareLetter(lineEleve,lineRef);
         System.out.println(ConsoleColor.RED+ " taux reussite "+ tauxReussite);
-        app1.applyDetectionCircle(1,"o2");
-        app2.applyDetectionCircle(2,"o3");
+        app1.applyDetectionCircle(1,"p");
+        app2.applyDetectionCircle(2,"p2");
+
     }
 
     List<HoughLine> applyDetectionLine(int index,
@@ -55,24 +58,23 @@ public class App extends JFrame {
         transformHough.addPoints(im);
         List<HoughLine> lines = new ArrayList(transformHough.getLines(10, 32));
         lines = reductionLineSimilar(lines);
-        save(im, "image" + index);
-        System.out.println(" nb= lines " + lines.size());
         imagePanel = new ImagePanel(lines, index);
         initFrame();
-        System.out.println("num points :" + transformHough.numPoints);
         return lines;
     }
     void applyDetectionCircle(int index, String namefile) {
         ProcessImage processImage = new ProcessImage();
         BufferedImage im = loadImage(namefile);
-       /* System.out.println("erosion ...");
-        for (int i = 0; i < 10; i++) im = processImage.erosion(im);
+        System.out.println("erosion ...");
+        for (int i = 0; i < 8; i++) im = processImage.erosion(im);
         save(im, "testErosion" + index);
-        im = processImage.bAndW(im);
-        save(im, "testBW" + index);*/
         im = processImage.formatageImCircle(im);
         save(im, "redecoupage" + index);
-        BufferedImage imCircle =new HoughEllipse().run("redecoupage"+index);
+        HoughEllipse circleHough = new HoughEllipse();
+        BufferedImage imCircle = circleHough.run("redecoupage"+index,precision);
+       this.listRadius= circleHough.listRadius;
+       this.listCenter = circleHough.listCenter;
+       
         save(imCircle,"testCircle"+index);
     }
     void initFrame() {

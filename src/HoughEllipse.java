@@ -9,12 +9,15 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.opencv.core.CvType.CV_8UC;
 
 class HoughEllipse {
-
-    public BufferedImage run(String name) {
+    List<Point> listCenter= new ArrayList<>();
+    List<Integer> listRadius= new ArrayList<>();
+     public BufferedImage run(String name, int precision) {
 
         String file = "/home/excilys/eclipse-workspace/OCR/" + name + ".png";
 
@@ -38,19 +41,25 @@ class HoughEllipse {
         for (int x = 0; x < circles.cols(); x++) {
             double[] c = circles.get(0, x);
             Point center = new Point(Math.round(c[0]), Math.round(c[1]));
-            // circle center
-            Imgproc.circle(src, center, 1, new Scalar(0,100,100), 3, 8, 0 );
-            // circle outline
             int radius = (int) Math.round(c[2]);
-            Imgproc.circle(src, center, radius, new Scalar(255,0,255), 3, 8, 0 );
+            listCenter.add(center);
+            listRadius.add(radius);
         }
-       BufferedImage im = null;
-        try {
-            im = Mat2BufferedImage(src);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        HighGui.imshow(" cercle "+name,src);
+        reductionCircleSimilar(precision);
+         System.out.println(ConsoleColor.PURPLE_BOLD+" size Center "+ listCenter.size());
+         System.out.println(ConsoleColor.PURPLE_BOLD+"  size Radius"+ listRadius.size()+ConsoleColor.RESET);
+         for (int x = 0; x < listRadius.size(); x++) {
+             // circle center
+             Imgproc.circle(src, listCenter.get(x), 1, new Scalar(0,100,100), 3, 8, 0 );
+             // circle outline
+             Imgproc.circle(src, listCenter.get(x), listRadius.get(x), new Scalar(255,0,255), 3, 8, 0 );
+         }
+         BufferedImage im = null;
+         try {
+             im = Mat2BufferedImage(src);
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
         return im;
     }
 
@@ -63,7 +72,28 @@ class HoughEllipse {
         BufferedImage bi=ImageIO.read(new ByteArrayInputStream(ba));
         return bi;
     }
+    double distancePoints(Point p1,Point p2) {
+        return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p2.y, 2));
+    }
+    void reductionCircleSimilar(int precision) {
+        int i=0,j;
+        while (i < listCenter.size()) {
+            j=0;
 
+            while (j < listCenter.size()) {
+                if (i != j) {
+                    double dist = distancePoints(listCenter.get(i),listCenter.get(j));
+                    double diff = Math.abs(listRadius.get(i)-listRadius.get(j));
+                    if(dist <=precision){
+                        listCenter.remove(j);
+                        listRadius.remove(j);
+                    }
+                }
+                j++;
+            }
+            i++;
+        }
+    }
     public static Mat BufferedImage2Mat(BufferedImage image) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ImageIO.write(image, "jpng", byteArrayOutputStream);
