@@ -9,10 +9,15 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-class HoughEllipse {
+class HoughCircle {
 
-    public BufferedImage run(String name) {
+    List<Point> listCenter= new ArrayList<>();
+    List<Integer> listRadius= new ArrayList<>();
+
+    public BufferedImage run(String name, int precision) {
 
         String file = "/home/excilys/capico-java/Cappico_testOCR/" + name + ".png";
 
@@ -20,7 +25,8 @@ class HoughEllipse {
 
         if( src.empty() ) {
             System.out.println("Error opening image!");
-            System.out.println("Program Arguments: [image_name -- default " + file +"] \n");
+            System.out.println("Program Arguments: [image_name -- default "
+                    + file +"] \n");
             System.exit(-1);
         }
 
@@ -30,32 +36,33 @@ class HoughEllipse {
         Mat circles = new Mat();
         Imgproc.HoughCircles(gray, circles, Imgproc.HOUGH_GRADIENT, 1.0,
                 (double)gray.rows()/16, // change this value to detect circles with different distances to each other
-                100.0, 30.0, 1, 100 ); // change the last two parameters
+                100.0, 30.0, 1, 140); // change the last two parameters
         // (min_radius & max_radius) to detect larger circles
         for (int x = 0; x < circles.cols(); x++) {
             double[] c = circles.get(0, x);
-            Point center = null;
-            int radius = 0;
-            for(int j = 0 ; j < c.length ; j++) {
-                 radius = (int) Math.round(c[2]);
-            }
-            center = new Point(Math.round(c[0]), Math.round(c[1]));
-            // circle center
-            Imgproc.circle(src, center, 1, new Scalar(0,100,100), 1, 8, 0 );
-            // circle outline
-            Imgproc.circle(src, center, radius, new Scalar(255,0,255), 2, 8, 0 );
+            Point center = new Point(Math.round(c[0]), Math.round(c[1]));
+            int radius = (int) Math.round(c[2]);
+            listCenter.add(center);
+            listRadius.add(radius);
         }
-        HighGui.imshow("detected circles " + name, src);
-
+        reductionCircleSimilar(precision);
+        System.out.println(ConsoleColor.PURPLE_BOLD + " size Center " + listCenter.size());
+        System.out.println(ConsoleColor.PURPLE_BOLD + " size Radius " + listRadius.size()+ConsoleColor.RESET);
+        for (int x = 0; x < listRadius.size(); x++) {
+            // circle center
+            Imgproc.circle(src, listCenter.get(x), 1, new Scalar(0,100,100), 3, 8, 0 );
+            // circle outline
+            Imgproc.circle(src, listCenter.get(x), listRadius.get(x), new Scalar(255,0,255), 3, 8, 0 );
+        }
         BufferedImage im = null;
         try {
             im = Mat2BufferedImage(src);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        HighGui.imshow(" cercle "+name,src);
         return im;
     }
+
 
     BufferedImage Mat2BufferedImage(Mat matrix)throws Exception {
         MatOfByte mob=new MatOfByte();
@@ -66,6 +73,29 @@ class HoughEllipse {
         return bi;
     }
 
+    double distancePoints(Point p1,Point p2) {
+        return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p2.y, 2));
+    }
+
+    void reductionCircleSimilar(int precision) {
+        int i=0,j;
+        while (i < listCenter.size()) {
+            j=0;
+
+            while (j < listCenter.size()) {
+                if (i != j) {
+                    double dist = distancePoints(listCenter.get(i),listCenter.get(j));
+                    double diff = Math.abs(listRadius.get(i)-listRadius.get(j));
+                    if(dist <=precision){
+                        listCenter.remove(j);
+                        listRadius.remove(j);
+                    }
+                }
+                j++;
+            }
+            i++;
+        }
+    }
     public static Mat BufferedImage2Mat(BufferedImage image) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ImageIO.write(image, "jpng", byteArrayOutputStream);
@@ -73,4 +103,3 @@ class HoughEllipse {
         return Imgcodecs.imdecode(new MatOfByte(byteArrayOutputStream.toByteArray()), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
     }
 }
-

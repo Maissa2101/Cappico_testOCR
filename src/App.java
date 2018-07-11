@@ -1,3 +1,5 @@
+import org.opencv.core.Point;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +11,9 @@ import java.util.List;
 import java.util.Vector;
 
 public class App extends JFrame {
+
+    List<Point> listCenter= new ArrayList<>();
+    List<Integer> listRadius= new ArrayList<>();
 
     static {
         System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
@@ -27,7 +32,7 @@ public class App extends JFrame {
         App app1 = new App();
         App app2 = new App();
         ValidationChar vc = new ValidationChar();
-        List<HoughLine> lineEleve = app2.applyDetection(1, "p");
+                List<HoughLine> lineEleve = app2.applyDetection(1, "p");
         System.out.println();
         System.out.println();
         List<HoughLine> lineRef = app1.applyDetection(2, "p2");
@@ -63,15 +68,16 @@ public class App extends JFrame {
     void applyDetectionCircle(int index, String namefile) {
         ProcessImage processImage = new ProcessImage();
         BufferedImage im = loadImage(namefile);
-       /* System.out.println("erosion ...");
-        for (int i = 0; i < 10; i++) im = processImage.erosion(im);
+        System.out.println("erosion ...");
+        for (int i = 0; i < 8; i++) im = processImage.erosion(im);
         save(im, "testErosion" + index);
-        im = processImage.bAndW(im);
-        save(im, "testBW" + index);*/
         im = processImage.formatageImCircle(im);
         save(im, "redecoupage" + index);
-        BufferedImage imCircle = new HoughEllipse().run("redecoupage"+index);
-        save(imCircle,"testCircle"+ index);
+        HoughCircle circleHough = new HoughCircle();
+        BufferedImage imCircle = circleHough.run("redecoupage"+index, precision);
+        this.listRadius= circleHough.listRadius;
+        this.listCenter = circleHough.listCenter;
+        save(imCircle,"testCircle"+index);
     }
 
     void initFrame() {
