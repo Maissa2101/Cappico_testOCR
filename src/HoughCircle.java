@@ -15,6 +15,7 @@ class HoughCircle {
 
     List<Point> listCenter= new ArrayList<>();
     List<Integer> listRadius= new ArrayList<>();
+
     public BufferedImage run(String name, int precision) {
 
         String file = "/home/excilys/capico-java/Cappico_testOCR/" + name + ".png";
@@ -43,7 +44,9 @@ class HoughCircle {
             listCenter.add(center);
             listRadius.add(radius);
         }
+
         reductionCircleSimilar(precision);
+
         System.out.println(ConsoleColor.PURPLE_BOLD+"Size Center "+ listCenter.size());
         System.out.println(ConsoleColor.PURPLE_BOLD+"Size Radius "+ listRadius.size()+ConsoleColor.RESET);
         for (int x = 0; x < listRadius.size(); x++) {
@@ -73,6 +76,7 @@ class HoughCircle {
     double distancePoints(Point p1,Point p2) {
         return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p2.y, 2));
     }
+
     void reductionCircleSimilar(int precision) {
         int i=0,j;
         while (i < listCenter.size()) {
@@ -94,11 +98,4 @@ class HoughCircle {
         }
     }
 
-
-    public static Mat BufferedImage2Mat(BufferedImage image) throws IOException {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ImageIO.write(image, "jpng", byteArrayOutputStream);
-        byteArrayOutputStream.flush();
-        return Imgcodecs.imdecode(new MatOfByte(byteArrayOutputStream.toByteArray()), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
-    }
 }

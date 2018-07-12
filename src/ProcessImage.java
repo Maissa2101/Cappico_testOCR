@@ -70,7 +70,6 @@ public class ProcessImage {
         return imchar;
     }
     BufferedImage decoupageCircle(BufferedImage im) {
-        System.out.println("min XC"+minXC+ " minYC"+minYC);
         BufferedImage imchar = new BufferedImage(maxXC - minXC, maxYC - minYC, im.getType());
         for (int i = 0; i < imchar.getWidth(); i++) {
             for (int j = 0; j < imchar.getHeight(); j++) {
