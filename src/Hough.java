@@ -24,9 +24,9 @@ public class Hough {
 
     }
 
-
     void initialiseHough(int w, int h) {
-        System.out.println("Initialisation hough ...");
+
+        System.out.println("Initialising Hough ...");
         width = w;
         height = h;
         houghHeight = (int) (Math.sqrt(2) * Math.max(h, w)) / 2;
@@ -46,7 +46,7 @@ public class Hough {
     }
 
     void addPoints(BufferedImage im) {
-        System.out.println("Ajout des points  .... ");
+        System.out.println("Adding points ... ");
 
         width = im.getWidth();
         height = im.getHeight();
@@ -110,7 +110,7 @@ public class Hough {
         Collections.sort(lines, Collections.reverseOrder());
 
         lines.setSize(n);
-        lines.removeIf(houghLine -> houghLine.score < 50);
+        lines.removeIf(houghLine ->(houghLine.score < 60));
 
 
         return lines;
