@@ -39,14 +39,14 @@ public class App extends JFrame {
         App app1 = new App();
         App app2 = new App();
         ValidationChar vc = new ValidationChar();
-        List<HoughLine> lineEleve = app1.applyDetectionLine(1, "p");
+        List<HoughLine> lineEleve = app1.applyDetectionLine(1, "c");
         System.out.println();
         System.out.println();
-        List<HoughLine> lineRef = app2.applyDetectionLine(2, "p2");
+        List<HoughLine> lineRef = app2.applyDetectionLine(2, "o3");
         double tauxReussite =  app1.compareLetter(lineEleve,lineRef);
         System.out.println(ConsoleColor.RED+ "Success rate "+ tauxReussite);
-        app1.applyDetectionCircle(1,"p2");
-        app2.applyDetectionCircle(2,"p");
+        app1.applyDetectionCircle(1,"o3");
+        app2.applyDetectionCircle(2,"c");
         app1.applyAll(1,lineRef);
         app2.applyAll(2,lineEleve);
 
@@ -124,55 +124,6 @@ public class App extends JFrame {
         this.listCenter = circleHough.listCenter;
 
         save(imCircle,"testCircle"+index);
-    }
-    void initFrame() {
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        /**  M E N U    B A R   **/
-        JMenuBar menuBar = new JMenuBar();
-        JMenu file = new JMenu("file");
-        JMenu edit = new JMenu("edit");
-        JMenu help = new JMenu("help");
-        JMenuItem newAction = new JMenuItem("new");
-        JMenuItem loadAction = new JMenuItem("open");
-        JMenuItem saveAction = new JMenuItem("save");
-        file.add(newAction);
-        file.add(loadAction);
-        file.add(saveAction);
-        menuBar.add(file);
-        menuBar.add(edit);
-        menuBar.add(help);
-        frame.add(menuBar);
-        frame.setJMenuBar(menuBar);
-        /** P a n n e a u x **/
-        JPanel panel1 = new JPanel();
-        panel1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Panel 1"));
-
-        JButton houghAction = new JButton("Hough transform");
-        JButton ocrAction = new JButton("Detect");
-        GridLayout gridLayout = new GridLayout(1, 2);
-        gridLayout.setHgap(5);
-        gridLayout.setVgap(5);
-        panel1.setLayout(gridLayout);
-        panel1.add(houghAction);
-        panel1.add(ocrAction);
-
-        /*** C A N V A S**/
-        frame.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 0.5;
-        gbc.gridy = 0;
-        gbc.weighty = 0.05;
-        frame.add(panel1, gbc);
-        gbc.gridy = 1;
-        gbc.weighty = 0.3;
-        frame.add(imagePanel, gbc);
-        gbc.gridy = 2;
-        gbc.weighty = 0.2;
-        frame.setSize(800, 600);
-        frame.setMinimumSize(new Dimension(800, 600));
-        frame.setResizable(true);
-        frame.setVisible(true);
     }
 
     BufferedImage loadImage(String nameFile) {

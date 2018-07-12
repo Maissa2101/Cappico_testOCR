@@ -70,7 +70,7 @@ public class ProcessImage {
         return imchar;
     }
     BufferedImage decoupageCircle(BufferedImage im) {
-        System.out.println("min XC"+minXC+ "  minYC"+minYC);
+        System.out.println("min XC"+minXC+ " minYC"+minYC);
         BufferedImage imchar = new BufferedImage(maxXC - minXC, maxYC - minYC, im.getType());
         for (int i = 0; i < imchar.getWidth(); i++) {
             for (int j = 0; j < imchar.getHeight(); j++) {
@@ -128,12 +128,9 @@ public class ProcessImage {
 
     BufferedImage erosion(BufferedImage im) {
         // parcours une fois tous les pixels si on trouve un pixels qui a un pixels voisin vide
-        // System.out.println("erosion ...");
         Kernel kernelErosion = new Kernel(2, 2, new float[]{1, 1, 1, 1});
         ConvolveOp convol = new ConvolveOp(kernelErosion, ConvolveOp.EDGE_NO_OP, null);
         BufferedImage imEro = convol.filter(im, null);
-
-        boolean test = false;
         return imEro;
     }
 
