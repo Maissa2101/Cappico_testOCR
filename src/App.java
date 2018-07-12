@@ -1,6 +1,5 @@
 import org.opencv.core.*;
 import org.opencv.core.Point;
-import org.opencv.highgui.HighGui;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
@@ -8,27 +7,31 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import static org.opencv.core.Core.countNonZero;
 import static org.opencv.core.CvType.CV_8UC1;
 
 public class App extends JFrame {
-    List<Point> listCenter= new ArrayList<>();
-    List<Integer> listRadius= new ArrayList<>();
+    static final int precision = 20;
+
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
+    List<Point> listCenter = new ArrayList<>();
+    List<Integer> listRadius = new ArrayList<>();
     JFrame frame = new JFrame("App");
     Hough transformHough;
     ImagePanel imagePanel;
     Vector<HoughLine> lines;
     double ecart;
-    static final int  precision = 20;
 
     public static void main(String[] args) {
         /** p r o g r a m m e **/
@@ -39,36 +42,84 @@ public class App extends JFrame {
         System.out.println();
         System.out.println();
         List<HoughLine> lineRef = app1.applyDetectionLine(2, "p");
-        double tauxReussite =  app1.compareLetter(lineEleve,lineRef);
-        System.out.println(ConsoleColor.RED+ " taux reussite "+ tauxReussite);
-        app1.applyDetectionCircle(1,"p");
-        app2.applyDetectionCircle(2,"p2");
-        app1.applyAll(1,lineRef);
-        app2.applyAll(2,lineEleve);
+        //  double tauxReussite =  app1.compareLetter(lineEleve,lineRef);
+        // System.out.println(ConsoleColor.RED+ " taux reussite "+ tauxReussite);
+//        app1.applyDetectionCircle(1,"p");
+//        app2.applyDetectionCircle(2,"p2");
+//        app1.applyAll(1,lineRef);
+//        app2.applyAll(2,lineEleve);
 
     }
 
-        BufferedImage skeleton(int index){
-        Mat src= loadImageMat("redecoupage"+index);
-        Imgproc.threshold(src,src,127,255,Imgproc.THRESH_BINARY);
-        Mat skel= new Mat(src.size(),CV_8UC1,Scalar.all(0));
-        Mat temp,eroded;
-        Mat element=  Imgproc.getStructuringElement(Imgproc.MORPH_CROSS,new Size(3,3));
+    public static Mat BufferedImage2Mat(BufferedImage image) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ImageIO.write(image, "jpng", byteArrayOutputStream);
+        byteArrayOutputStream.flush();
+        return Imgcodecs.imdecode(new MatOfByte(byteArrayOutputStream.toByteArray()), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
+    }
 
-        return null;
+    BufferedImage skeleton(int index, String name) {
+        System.out.println(" name " + name);
+        Mat src = loadImageMat(name);
+        Imgproc.threshold(src, src, 127, 255, Imgproc.THRESH_BINARY_INV);
+        Mat skel = new Mat(src.size(), CV_8UC1, new Scalar(0));
+        Mat temp = new Mat(), eroded = new Mat();
+        Mat element = Imgproc.getStructuringElement(Imgproc.MORPH_CROSS, new Size(3, 3));
+        boolean done = false;
+        Mat backup = new Mat();
+        Mat gray = new Mat();
+        double size = src.size().height*src.size().width;
+        int i = 0;
+        while (!done) {
+            i++;
+            backup = src;
+            Imgproc.erode(src, eroded, element);
+            Imgproc.dilate(eroded, temp, element);
+            Core.subtract(src, temp, temp);
+            Core.bitwise_or(skel, skel, temp, skel);
+            eroded.copyTo(src);
+            Imgproc.cvtColor(src, gray, Imgproc.COLOR_BGR2GRAY);
+            BufferedImage skelImg = null;
+            try {
+                skelImg = Mat2BufferedImage(src);
+                save(skelImg,"skeleton "+i);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            double zeros;
+            zeros = size - countNonZero(gray) ;
+            System.out.println("Size = " + size);
+            System.out.println("zero = "+zeros);
+            if(zeros==size){
+                done=true;
+            }
+
         }
 
+        BufferedImage skelImg = null;
+        try {
+            skelImg = Mat2BufferedImage(backup);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return skelImg;
+    }
+
     List<HoughLine> applyDetectionLine(int index,
-                                        String namefile) {
+                                       String namefile) {
         ProcessImage processImage = new ProcessImage();
         BufferedImage im = loadImage(namefile);
         System.out.println("erosion ...");
-        for (int i = 0; i < 10; i++) im = processImage.erosion(im);
+        System.out.println(" fin loading");
+        im = skeleton(index, namefile);
+
+//        for (int i = 0; i < 10; i++) im = processImage.erosion(im);
         save(im, "testErosion" + index);
-        im = processImage.bAndW(im);
-        save(im, "testBW" + index);
-        im = processImage.formatageIm(im);
-        save(im, "redecoupage" + index);
+//        im = processImage.bAndW(im);
+//        save(im, "testBW" + index);
+//        im = processImage.formatageIm(im);
+//        save(im, "redecoupage" + index);
         transformHough = new Hough();
         transformHough.initialiseHough(im.getWidth(), im.getHeight());
         transformHough.addPoints(im);
@@ -77,26 +128,26 @@ public class App extends JFrame {
         return lines;
     }
 
-    void applyAll(int index, List<HoughLine> lines){
-        Mat src= loadImageMat("redecoupage"+index);
-        BufferedImage imLine = Mix(src,lines);
-        save(imLine,"imageAll "+ index);
+    void applyAll(int index, List<HoughLine> lines) {
+        Mat src = loadImageMat("redecoupage" + index);
+        BufferedImage imLine = Mix(src, lines);
+        save(imLine, "imageAll " + index);
     }
 
-    BufferedImage Mix(Mat src,List<HoughLine> lines){
+    BufferedImage Mix(Mat src, List<HoughLine> lines) {
         HoughEllipse elli = new HoughEllipse();
         for (int x = 0; x < lines.size(); x++) {
-            Point p1= new Point();
-            Point p2= new Point();
-            p1.set( new double[]{lines.get(x).x1,lines.get(x).y1});
-            p2.set(new double[]{lines.get(x).x2,lines.get(x).y2});
-            Imgproc.line(src, p1,p2, new Scalar(0,100,100), 3, 8, 0 );
+            Point p1 = new Point();
+            Point p2 = new Point();
+            p1.set(new double[]{lines.get(x).x1, lines.get(x).y1});
+            p2.set(new double[]{lines.get(x).x2, lines.get(x).y2});
+            Imgproc.line(src, p1, p2, new Scalar(0, 100, 100), 3, 8, 0);
         }
         for (int x = 0; x < listRadius.size(); x++) {
             // circle center
-            Imgproc.circle(src, listCenter.get(x), 1, new Scalar(0,100,100), 3, 8, 0 );
+            Imgproc.circle(src, listCenter.get(x), 1, new Scalar(0, 100, 100), 3, 8, 0);
             // circle outline
-            Imgproc.circle(src, listCenter.get(x), listRadius.get(x), new Scalar(255,0,255), 3, 8, 0 );
+            Imgproc.circle(src, listCenter.get(x), listRadius.get(x), new Scalar(255, 0, 255), 3, 8, 0);
         }
         BufferedImage im = null;
         try {
@@ -116,12 +167,13 @@ public class App extends JFrame {
         im = processImage.formatageImCircle(im);
         save(im, "redecoupage" + index);
         HoughEllipse circleHough = new HoughEllipse();
-        BufferedImage imCircle = circleHough.run("redecoupage"+index,precision);
-       this.listRadius= circleHough.listRadius;
-       this.listCenter = circleHough.listCenter;
+        BufferedImage imCircle = circleHough.run("redecoupage" + index, precision);
+        this.listRadius = circleHough.listRadius;
+        this.listCenter = circleHough.listCenter;
 
-        save(imCircle,"testCircle"+index);
+        save(imCircle, "testCircle" + index);
     }
+
     void initFrame() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /**  M E N U    B A R   **/
@@ -266,35 +318,36 @@ public class App extends JFrame {
             return false;
         }
     }
-     Mat loadImageMat(String name){
-         String file = "/home/excilys/eclipse-workspace/OCR/" + name + ".png";
 
-         Mat src = Imgcodecs.imread(file, Imgcodecs.IMREAD_COLOR);
+    Mat loadImageMat(String name) {
+        System.out.println(" loading MAT IMG");
+        String file = "/home/excilys/eclipse-workspace/OCR/picture/" + name + ".png";
 
-         if( src.empty() ) {
-             System.out.println("Error opening image!");
-             System.out.println("Program Arguments: [image_name -- default "
-                     + file +"] \n");
-             System.exit(-1);
-         }
+        Mat src = Imgcodecs.imread(file, Imgcodecs.IMREAD_COLOR);
 
-         return src;
-     }
+        if (src.empty()) {
+            System.out.println("Error opening image!");
+            System.out.println("Program Arguments: [image_name -- default "
+                    + file + "] \n");
+            System.exit(-1);
+        }
+
+        return src;
+    }
+
     double foundPente(HoughLine line1, HoughLine line2) {
         return (line1.y2 - line2.y1) / (line1.x2 - line2.x1);
     }
 
     boolean compareAngle(double angle, double angle2) {
-        if (Math.abs(angle - angle2) < precision){
-            ecart=(Math.abs(angle-angle2));
+        if (Math.abs(angle - angle2) < precision) {
+            ecart = (Math.abs(angle - angle2));
             return true;
-        }
-        else{
-            if (Math.abs(angle - angle2) > 90 && 180 - Math.abs(angle - angle2) < precision){
-                ecart= (180-Math.abs(angle-angle2));
+        } else {
+            if (Math.abs(angle - angle2) > 90 && 180 - Math.abs(angle - angle2) < precision) {
+                ecart = (180 - Math.abs(angle - angle2));
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
         }
@@ -315,23 +368,23 @@ public class App extends JFrame {
         }
     }
 
-   double compareLetter(List<HoughLine> linesP, List<HoughLine> linesM) {
+    double compareLetter(List<HoughLine> linesP, List<HoughLine> linesM) {
         System.out.println(" Validation ::");
         int i = 0, j;
-        double nbValidateLine=0;
+        double nbValidateLine = 0;
 
 
         List<HoughLine> linesRef = new ArrayList<>();
         List<HoughLine> linesTest = new ArrayList<>();
 
-       if( !(linesP.size()>linesM.size())) {
-           linesRef.addAll(linesM);
-           linesTest.addAll(linesP);
-       }else{
-           linesRef.addAll(linesP);
-           linesTest.addAll(linesM);
+        if (!(linesP.size() > linesM.size())) {
+            linesRef.addAll(linesM);
+            linesTest.addAll(linesP);
+        } else {
+            linesRef.addAll(linesP);
+            linesTest.addAll(linesM);
 
-       }
+        }
         while (i < linesRef.size()) {
             j = 0;
             double m = (linesRef.get(i).y2 - linesRef.get(i).y1) / (linesRef.get(i).x2 - linesRef.get(i).x1);
@@ -343,25 +396,32 @@ public class App extends JFrame {
                     linesRef.remove(linesRef.get(i));
                     linesTest.remove(linesTest.get(j));
                     i--;
-                    System.out.println(ConsoleColor.BLUE+" ecart "+ (1-(ecart/100)));
-                    nbValidateLine=(nbValidateLine) + (1-(ecart/100));
+                    System.out.println(ConsoleColor.BLUE + " ecart " + (1 - (ecart / 100)));
+                    nbValidateLine = (nbValidateLine) + (1 - (ecart / 100));
                     break;
-                }else{
+                } else {
                     j++;
                 }
             }
             i++;
         }
 
-       if((linesP.size()>linesM.size())) {
-           return ((nbValidateLine*100)/linesP.size());
-       }else{
-           return ((nbValidateLine*100)/linesM.size());
+        if ((linesP.size() > linesM.size())) {
+            return ((nbValidateLine * 100) / linesP.size());
+        } else {
+            return ((nbValidateLine * 100) / linesM.size());
 
-       }
+        }
 
     }
 
+    BufferedImage Mat2BufferedImage(Mat matrix) throws Exception {
+        MatOfByte mob = new MatOfByte();
+        Imgcodecs.imencode(".jpg", matrix, mob);
+        byte ba[] = mob.toArray();
+        BufferedImage bi = ImageIO.read(new ByteArrayInputStream(ba));
+        return bi;
+    }
 
 }
 
