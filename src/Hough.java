@@ -111,7 +111,12 @@ public class Hough {
         Collections.sort(lines, Collections.reverseOrder());
 
         lines.setSize(n);
-        lines.removeIf(houghLine -> houghLine.score < 50);
+//        for(HoughLine line:lines){
+//            if(line==null || line.score<50){
+//                lines.remove(line)
+//            }
+//        }
+        lines.removeIf(houghLine ->(houghLine.score < 60));
 
 
         return lines;

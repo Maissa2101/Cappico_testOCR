@@ -63,6 +63,7 @@ public class ProcessImage {
         return imchar;
     }
     BufferedImage decoupageCircle(BufferedImage im) {
+        System.out.println(" min XC"+minXC+ "   minYC"+minYC);
         BufferedImage imchar = new BufferedImage(maxXC - minXC, maxYC - minYC, im.getType());
         for (int i = 0; i < imchar.getWidth(); i++) {
             for (int j = 0; j < imchar.getHeight(); j++) {
@@ -100,7 +101,7 @@ public class ProcessImage {
         minYC = im.getHeight();
         for (int i = 0; i < im.getWidth(); i++) {
             for (int j = 0; j < im.getHeight(); j++) {
-                if (im.getRGB(i, j) == Color.BLACK.getRGB()) {
+                if (im.getRGB(i, j) == Color.black.getRGB()) {
                     if (maxXC < i) {
                         maxXC = i;
                     }

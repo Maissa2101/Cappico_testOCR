@@ -1,6 +1,8 @@
-import org.opencv.core.Core;
+import org.opencv.core.*;
 import org.opencv.core.Point;
 import org.opencv.highgui.HighGui;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,6 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+
+import static org.opencv.core.CvType.CV_8UC1;
 
 public class App extends JFrame {
     List<Point> listCenter= new ArrayList<>();
@@ -31,16 +35,28 @@ public class App extends JFrame {
         App app1 = new App();
         App app2 = new App();
         ValidationChar vc = new ValidationChar();
-        List<HoughLine> lineEleve = app2.applyDetectionLine(1, "Atest5");
+        List<HoughLine> lineEleve = app2.applyDetectionLine(1, "p2");
         System.out.println();
         System.out.println();
-        List<HoughLine> lineRef = app1.applyDetectionLine(2, "Amaj");
+        List<HoughLine> lineRef = app1.applyDetectionLine(2, "p");
         double tauxReussite =  app1.compareLetter(lineEleve,lineRef);
         System.out.println(ConsoleColor.RED+ " taux reussite "+ tauxReussite);
         app1.applyDetectionCircle(1,"p");
         app2.applyDetectionCircle(2,"p2");
+        app1.applyAll(1,lineRef);
+        app2.applyAll(2,lineEleve);
 
     }
+
+        BufferedImage skeleton(int index){
+        Mat src= loadImageMat("redecoupage"+index);
+        Imgproc.threshold(src,src,127,255,Imgproc.THRESH_BINARY);
+        Mat skel= new Mat(src.size(),CV_8UC1,Scalar.all(0));
+        Mat temp,eroded;
+        Mat element=  Imgproc.getStructuringElement(Imgproc.MORPH_CROSS,new Size(3,3));
+
+        return null;
+        }
 
     List<HoughLine> applyDetectionLine(int index,
                                         String namefile) {
@@ -58,10 +74,39 @@ public class App extends JFrame {
         transformHough.addPoints(im);
         List<HoughLine> lines = new ArrayList(transformHough.getLines(10, 32));
         lines = reductionLineSimilar(lines);
-        imagePanel = new ImagePanel(lines, index);
-        initFrame();
         return lines;
     }
+
+    void applyAll(int index, List<HoughLine> lines){
+        Mat src= loadImageMat("redecoupage"+index);
+        BufferedImage imLine = Mix(src,lines);
+        save(imLine,"imageAll "+ index);
+    }
+
+    BufferedImage Mix(Mat src,List<HoughLine> lines){
+        HoughEllipse elli = new HoughEllipse();
+        for (int x = 0; x < lines.size(); x++) {
+            Point p1= new Point();
+            Point p2= new Point();
+            p1.set( new double[]{lines.get(x).x1,lines.get(x).y1});
+            p2.set(new double[]{lines.get(x).x2,lines.get(x).y2});
+            Imgproc.line(src, p1,p2, new Scalar(0,100,100), 3, 8, 0 );
+        }
+        for (int x = 0; x < listRadius.size(); x++) {
+            // circle center
+            Imgproc.circle(src, listCenter.get(x), 1, new Scalar(0,100,100), 3, 8, 0 );
+            // circle outline
+            Imgproc.circle(src, listCenter.get(x), listRadius.get(x), new Scalar(255,0,255), 3, 8, 0 );
+        }
+        BufferedImage im = null;
+        try {
+            im = elli.Mat2BufferedImage(src);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return im;
+    }
+
     void applyDetectionCircle(int index, String namefile) {
         ProcessImage processImage = new ProcessImage();
         BufferedImage im = loadImage(namefile);
@@ -74,7 +119,7 @@ public class App extends JFrame {
         BufferedImage imCircle = circleHough.run("redecoupage"+index,precision);
        this.listRadius= circleHough.listRadius;
        this.listCenter = circleHough.listCenter;
-       
+
         save(imCircle,"testCircle"+index);
     }
     void initFrame() {
@@ -221,7 +266,20 @@ public class App extends JFrame {
             return false;
         }
     }
+     Mat loadImageMat(String name){
+         String file = "/home/excilys/eclipse-workspace/OCR/" + name + ".png";
 
+         Mat src = Imgcodecs.imread(file, Imgcodecs.IMREAD_COLOR);
+
+         if( src.empty() ) {
+             System.out.println("Error opening image!");
+             System.out.println("Program Arguments: [image_name -- default "
+                     + file +"] \n");
+             System.exit(-1);
+         }
+
+         return src;
+     }
     double foundPente(HoughLine line1, HoughLine line2) {
         return (line1.y2 - line2.y1) / (line1.x2 - line2.x1);
     }

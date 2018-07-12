@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.opencv.core.CvType.CV_8UC;
 
 class HoughEllipse {
     List<Point> listCenter= new ArrayList<>();
@@ -50,7 +49,7 @@ class HoughEllipse {
          System.out.println(ConsoleColor.PURPLE_BOLD+"  size Radius"+ listRadius.size()+ConsoleColor.RESET);
          for (int x = 0; x < listRadius.size(); x++) {
              // circle center
-             Imgproc.circle(src, listCenter.get(x), 1, new Scalar(0,100,100), 3, 8, 0 );
+            Imgproc.circle(src, listCenter.get(x), 1, new Scalar(0,100,100), 3, 8, 0 );
              // circle outline
              Imgproc.circle(src, listCenter.get(x), listRadius.get(x), new Scalar(255,0,255), 3, 8, 0 );
          }
@@ -87,6 +86,7 @@ class HoughEllipse {
                     if(dist <=precision){
                         listCenter.remove(j);
                         listRadius.remove(j);
+                        j--;
                     }
                 }
                 j++;
@@ -94,6 +94,8 @@ class HoughEllipse {
             i++;
         }
     }
+
+
     public static Mat BufferedImage2Mat(BufferedImage image) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ImageIO.write(image, "jpng", byteArrayOutputStream);
