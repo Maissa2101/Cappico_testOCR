@@ -40,14 +40,14 @@ public class App extends JFrame {
         App app1 = new App();
         App app2 = new App();
         ValidationChar vc = new ValidationChar();
-        List<HoughLine> lineEleve = app1.applyDetectionLine(1, "iMajtest");
+        List<HoughLine> lineEleve = app1.applyDetectionLine(1, "E1");
         System.out.println();
         System.out.println();
-        List<HoughLine> lineRef = app2.applyDetectionLine(2, "iMaj");
+        List<HoughLine> lineRef = app2.applyDetectionLine(2, "E2");
         double tauxReussite = app1.compareLetter(lineEleve, lineRef);
         System.out.println(ConsoleColor.RED + "Success rate for lines " + tauxReussite + ConsoleColor.RESET);
-        app1.applyDetectionCircle(1, "iMaj");
-        app2.applyDetectionCircle(2, "iMajtest");
+        app1.applyDetectionCircle(1, "E2");
+        app2.applyDetectionCircle(2, "E1");
 
         double tauxReussite2 = compareCircles(app1, app2);
         System.out.println(ConsoleColor.RED + "Success rate for circles " + tauxReussite2 + ConsoleColor.RESET);
@@ -148,8 +148,8 @@ public class App extends JFrame {
             }
             i++;
         }
-        System.out.println(ConsoleColor.BLUE + "Ecart for centers \t" + ecartCenter);
-        System.out.println("Ecart for radius \t" + ecartdiff + ConsoleColor.RESET);
+        System.out.println(ConsoleColor.BLUE + "Gap for centers " + ecartCenter);
+        System.out.println("Gap for radius \t" + ecartdiff + ConsoleColor.RESET);
         if (pM.listCenter.size() > pE.listCenter.size()) {
             double diff = pM.listCenter.size() - pE.listCenter.size();
             System.out.println("Diff supp " + diff + " score = "+ score);
@@ -326,7 +326,7 @@ public class App extends JFrame {
                     linesRef.remove(linesRef.get(i));
                     linesTest.remove(linesTest.get(j));
                     i--;
-                    System.out.println(ConsoleColor.BLUE + "Ecart\t" + (1 - (ecart / 100)));
+                    System.out.println(ConsoleColor.BLUE + "Gap for lines " + (1 - (ecart / 100)));
                     nbValidateLine = (nbValidateLine) + (1 - (ecart / 100));
                     break;
                 } else {
