@@ -40,21 +40,27 @@ public class App extends JFrame {
         App app1 = new App();
         App app2 = new App();
         ValidationChar vc = new ValidationChar();
-        List<HoughLine> lineEleve = app1.applyDetectionLine(1, "p2");
+        List<HoughLine> lineEleve = app1.applyDetectionLine(1, "iMajtest");
         System.out.println();
         System.out.println();
-        List<HoughLine> lineRef = app2.applyDetectionLine(2, "p");
+        List<HoughLine> lineRef = app2.applyDetectionLine(2, "iMaj");
         double tauxReussite = app1.compareLetter(lineEleve, lineRef);
         System.out.println(ConsoleColor.RED + "Success rate for lines " + tauxReussite + ConsoleColor.RESET);
-        app1.applyDetectionCircle(1, "p");
-        app2.applyDetectionCircle(2, "p2");
+        app1.applyDetectionCircle(1, "iMaj");
+        app2.applyDetectionCircle(2, "iMajtest");
 
         double tauxReussite2 = compareCircles(app1, app2);
         System.out.println(ConsoleColor.RED + "Success rate for circles " + tauxReussite2 + ConsoleColor.RESET);
         app1.applyAll(1, lineRef);
         app2.applyAll(2, lineEleve);
-        System.out.println(ConsoleColor.CYAN + "Global success rate : " + (tauxReussite + tauxReussite2) / 2 + ConsoleColor.RESET);
 
+        if(!Double.isNaN(tauxReussite) && !Double.isNaN(tauxReussite2)) {
+            System.out.println(ConsoleColor.CYAN + "Global success rate : " + (tauxReussite + tauxReussite2) / 2 + ConsoleColor.RESET);
+        } else if( Double.isNaN(tauxReussite)) {
+            System.out.println(ConsoleColor.CYAN + "Global success rate : " + tauxReussite2 + ConsoleColor.RESET);
+        } else if (Double.isNaN(tauxReussite2)){
+            System.out.println(ConsoleColor.CYAN + "Global success rate : " + tauxReussite + ConsoleColor.RESET);
+        }
     }
 
     BufferedImage skeleton(int index) {
