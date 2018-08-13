@@ -15,7 +15,7 @@ public class ProcessImage {
         imageTable = decoupage(imageTable);
         Bitmap formatedImage = Bitmap.createBitmap(imageTable.getImage(),imageTable.getWidth(),
                 imageTable.getHeight(), Bitmap.Config.ARGB_8888);
-        //formatedImage = BitmapUtils.resizeKeepRatio(formatedImage,300,300);
+        formatedImage = BitmapUtils.resizeKeepRatio(formatedImage,300,300);
 
         int w = formatedImage.getWidth();
         int h = formatedImage.getHeight();

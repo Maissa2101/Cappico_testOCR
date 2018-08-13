@@ -6,9 +6,10 @@ import java.util.List;
 
 public class Main {
 
-    //static String modelImagePath = "/home/radureau/dl4j_Emnist/uppercase_png/training/A/train_41_00744.png";
-    static String modelImagePath = "/home/radureau/Téléchargements/letters_capicokids_png/m/M_capicokids_1.png";
-    static String userImagePath = "/home/radureau/Téléchargements/letters_capicokids_png/m/M_capicokids_1.png";
+    static String modelImagePath = "/home/radureau/dl4j_Emnist/uppercase_png/training/A/train_41_00744.png";
+    static  String userImagePath = modelImagePath;
+    //static String modelImagePath = "/home/radureau/Téléchargements/letters_capicokids_png/m/M_capicokids_1.png";
+    //static String userImagePath = "/home/radureau/Téléchargements/letters_capicokids_png/m/M_capicokids_1.png";
     //static String userImagePath = "/home/radureau/Téléchargements/letters_capicokids_png/g/g_capicokids_1.png";
 
     public static  Boolean areUserAnswersCorrect() {

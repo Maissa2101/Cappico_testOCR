@@ -8,6 +8,9 @@ import java.io.OutputStream;
 
 public class Bitmap {
     private final BufferedImage bufferedImage;
+    public BufferedImage getBufferedImage() {
+        return bufferedImage;
+    }
     public static final class Config {
         public static final int ARGB_8888 = BufferedImage.TYPE_INT_ARGB;
     };
