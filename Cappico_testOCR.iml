@@ -8,17 +8,20 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="src" level="project" />
+    <orderEntry type="library" exported="" name="lib" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/openCV-test/opencv/build/bin/opencv-342.jar!/" />
+          <root url="jar://$USER_HOME$/Documents/opencv/build/bin/opencv-342.jar!/" />
         </CLASSES>
         <JAVADOC />
+        <NATIVE>
+          <root url="file://$USER_HOME$/Documents/opencv/build/lib" />
+        </NATIVE>
         <SOURCES>
-          <root url="jar://$USER_HOME$/openCV-test/opencv/build/bin/opencv-342.jar!/" />
+          <root url="jar://$USER_HOME$/Documents/opencv/build/bin/opencv-342.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

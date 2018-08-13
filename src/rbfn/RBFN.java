@@ -68,7 +68,7 @@ public class RBFN {
     private void setup_sigma_spread_radius() {
         for(int i=0; i<this.no_of_hidden; i++) {
             Mat center = this.centroid.row(i);
-            this.sigma.put(i,1, this.set_up_sigma_for_center(center));
+            this.sigma.put(i,0, this.set_up_sigma_for_center(center));
         }
     }
 
@@ -132,11 +132,10 @@ public class RBFN {
         for(int i=0; i<this.data.getPatterns().size(); i++) {
             all_index.add(i);
         }
-
         for(int i=0; i<this.data.getPatterns().size(); i++) {
-            int random_index = (int)(NP.randomUniform()) * all_index.size();
+            int random_index = (int)(NP.randomUniform() * all_index.size());
             //Get a random pattern to train
-            Pattern pattern = this.data.getPatterns().get(random_index);
+            Pattern pattern = this.data.getPatterns().get(all_index.get(random_index));
             all_index.remove(random_index);
 
             Mat input = pattern.getInput();
@@ -160,7 +159,7 @@ public class RBFN {
         this.hidden_output = NP.zeros(this.no_of_hidden);
         for(int i=0; i<this.no_of_hidden; i++) {
             double euclid_distance = Math.pow(RBFN.eclidean_distance(this.input.t(), this.centroid.row(i)), 2);
-            this.hidden_output.put(i,1,Math.exp(- (euclid_distance / (2 * Math.pow(this.sigma.get(i,0)[0], 2)))));
+            this.hidden_output.put(i,0,Math.exp(- (euclid_distance / (2 * Math.pow(this.sigma.get(i,0)[0], 2)))));
         }
     }
 
@@ -171,7 +170,7 @@ public class RBFN {
             double output_value = 0;
             for(int j=0; j<this.no_of_hidden; j++) {
                 double newOutput = this.output.get(i,0)[0] + this.hidden_to_output_weight.get(j,i)[0] * this.hidden_output.get(j,0)[0];
-                this.output.put(i,1, newOutput);
+                this.output.put(i,0, newOutput);
             }
         }
         //Normalize
@@ -179,7 +178,7 @@ public class RBFN {
             total += this.output.get(i,0)[0];
         }
         for(int i=0; i<this.no_of_output; i++) {
-            total += this.output.put(i,1, this.output.get(i,0)[0] / total);
+            total += this.output.put(i,0, this.output.get(i,0)[0] / total);
         }
         this.total = total;
     }
@@ -189,8 +188,9 @@ public class RBFN {
      */
     private double get_error_for_pattern() {
         double error = 0.0;
-        for(int i=0; i<this.output.cols(); i++)
+        for(int i=0; i<this.output.rows(); i++) {
             error += Math.pow(this.actual_target_values.get(i,0)[0] - this.output.get(i,0)[0], 2);
+        }
         return error;
     }
 
@@ -202,7 +202,7 @@ public class RBFN {
         this.mean_error = 0.0;
         this.error_of_output_layer = NP.zeros(this.no_of_output);
         for(int i=0; i<this.no_of_output; i++) {
-            this.error_of_output_layer.put(i,1, this.actual_target_values.get(i,0)[0] - this.output.get(i,0)[0]);
+            this.error_of_output_layer.put(i,0, this.actual_target_values.get(i,0)[0] - this.output.get(i,0)[0]);
             this.mean_error += Math.pow(this.actual_target_values.get(i,0)[0] - this.output.get(i,0)[0], 2) / 2;
         }
 
@@ -217,7 +217,7 @@ public class RBFN {
         // For bias
         for(int o=0; o<this.no_of_output; o++){
             double delta_bias = this.learningRate * this.error_of_output_layer.get(o,0)[0];
-            this.output_bias.put(o,1, this.output_bias.get(o,0)[0] + delta_bias);
+            this.output_bias.put(o,0, this.output_bias.get(o,0)[0] + delta_bias);
         }
 
         // Adjust center / input to hidden weight
@@ -243,7 +243,7 @@ public class RBFN {
 
                 double second_part = Math.pow(this.input.get(i,0)[0] - this.centroid.get(j,i)[0], 2) / Math.pow(this.sigma.get(j,0)[0], 3);
                 double delta_weight = 0.1 * this.learningRate * this.hidden_output.get(j,0)[0] * second_part * summ;
-                this.sigma.put(j,1, this.sigma.get(j,0)[0] + delta_weight);
+                this.sigma.put(j,0, this.sigma.get(j,0)[0] + delta_weight);
             }
         }
         return this.mean_error;
@@ -258,6 +258,9 @@ public class RBFN {
             Mat act_output = pattern.getOutput();
             int n_neuron = this.get_fired_neuron(n_output);
             int a_neuron = this.get_fired_neuron(act_output);
+            System.out.println(
+                    "predict("+(int)pattern.getInput().get(0,0)[0]
+                    +"xor"+(int)pattern.getInput().get(1,0)[0]+") = " + n_neuron + " ("+a_neuron+")");
 
             if(n_neuron == a_neuron)
                 correct += 1;
@@ -266,12 +269,23 @@ public class RBFN {
         return accuracy;
     }
 
+
     private int get_fired_neuron(Mat output) {
         int max = 0;
         for(int i=0; i<output.rows(); i++)
-            if(output.get(i,0)[0] > output.get(i,max)[0])
+            if(output.get(i,0)[0] > output.get(max,0)[0])
                 max = i;
         return max;
+    }
+
+    public Mat evalAndGetWeights(Mat input) {
+        this.pass_input_to_network(input);
+        return this.output.clone();
+    }
+
+    public int evalAndGetOutputIndex(Mat input) {
+        this.pass_input_to_network(input);
+        return this.get_fired_neuron(this.output);
     }
 
     public static void main(String... args) {
@@ -279,8 +293,8 @@ public class RBFN {
         v10 = new Mat(2,1,CvType.CV_64F), v11= new Mat(2,1,CvType.CV_64F);
         v00.put(0,0,0); v00.put(1,0,0);
         v01.put(0,0,0); v01.put(1,0,1);
-        v10.put(0,0,1); v00.put(1,0,0);
-        v11.put(0,0,1); v01.put(1,0,1);
+        v10.put(0,0,1); v10.put(1,0,0);
+        v11.put(0,0,1); v11.put(1,0,1);
         Pattern p1 = new Pattern(1, v00, v10);
         Pattern p2 = new Pattern(2, v01, v01);
         Pattern p3 = new Pattern(3, v10, v01);
@@ -289,7 +303,7 @@ public class RBFN {
         List<Pattern> patterns = Arrays.asList(p1, p2, p3, p4);
         List<Character> classLabels = Arrays.asList('0', '1');
         Data data = new Data(patterns, classLabels);
-        RBFN rbfn = new RBFN(2, 6, 2, data);
+        RBFN rbfn = new RBFN(2, 10, 2, data);
         double mse = rbfn.train(1500);
         double accuracy = rbfn.get_accuracy_for_training();
         System.out.println("Total accuracy is " + accuracy);
