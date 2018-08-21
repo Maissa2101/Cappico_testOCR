@@ -15,7 +15,6 @@ public class Main {
     public static  Boolean areUserAnswersCorrect() {
         Bitmap studentDraw;
         Bitmap modelDraw;
-
         modelDraw = BitmapFactory.decodeFile(modelImagePath);
         studentDraw = BitmapFactory.decodeFile(userImagePath);
         List<HoughLine> modelLine = App.applyDetection(modelDraw);

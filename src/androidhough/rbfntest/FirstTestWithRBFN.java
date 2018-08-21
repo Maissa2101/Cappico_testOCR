@@ -17,7 +17,6 @@ import java.util.Map;
 public class FirstTestWithRBFN {
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        System.loadLibrary("opencv_java342");
     }
 
     static File srcMnistDir = new File(System.getProperty("user.home"),"/Téléchargements/letters_capicokids_png/");

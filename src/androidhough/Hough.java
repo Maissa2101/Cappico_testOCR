@@ -58,7 +58,7 @@ public class Hough {
 
         for (int x = 0; x < imageTable.getWidth(); x++) {
             for (int y = 0; y < imageTable.getHeight(); y++) {
-                if ((imageTable.getImage()[x + y * imageTable.getWidth()] & 0x00000ff) != 0) {
+                if ((imageTable.getImage()[x + y * imageTable.getWidth()] & 0x000000FF) != 0) {
                     addPoint(x, y);
                 }
             }

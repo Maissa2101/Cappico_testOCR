@@ -17,7 +17,10 @@ public class RBFN {
 
     static {
         System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
+<<<<<<< HEAD
         System.loadLibrary("opencv_java342");
+=======
+>>>>>>> bdf0f389528c0718ae69b7a46f74fa63a4673d90
     }
 
     private final int no_of_input;
@@ -127,6 +130,10 @@ public class RBFN {
     }
 
     private double pass_one_epoch() {
+<<<<<<< HEAD
+=======
+        System.out.println("pass one epoch");
+>>>>>>> bdf0f389528c0718ae69b7a46f74fa63a4673d90
         double all_error = 0.0;
         ArrayList<Integer> all_index = new ArrayList<>();
         for(int i=0; i<this.data.getPatterns().size(); i++) {
@@ -138,6 +145,11 @@ public class RBFN {
             Pattern pattern = this.data.getPatterns().get(all_index.get(random_index));
             all_index.remove(random_index);
 
+<<<<<<< HEAD
+=======
+            System.out.println(pattern.getPattern_id());
+
+>>>>>>> bdf0f389528c0718ae69b7a46f74fa63a4673d90
             Mat input = pattern.getInput();
             this.actual_target_values = pattern.getOutput();
             this.pass_input_to_network(input);
@@ -250,7 +262,11 @@ public class RBFN {
     }
 
     public double get_accuracy_for_training() {
+<<<<<<< HEAD
         int correct = 0;
+=======
+        double correct = 0.0;
+>>>>>>> bdf0f389528c0718ae69b7a46f74fa63a4673d90
         for(int i=0; i<this.data.getPatterns().size(); i++){
             Pattern pattern = this.data.getPatterns().get(i);
             this.pass_input_to_network(pattern.getInput());
@@ -263,9 +279,15 @@ public class RBFN {
                     +"xor"+(int)pattern.getInput().get(1,0)[0]+") = " + n_neuron + " ("+a_neuron+")");
 
             if(n_neuron == a_neuron)
+<<<<<<< HEAD
                 correct += 1;
         }
         double accuracy = correct / this.data.getPatterns().size() * 100;
+=======
+                correct += 1.0;
+        }
+        double accuracy = correct / this.data.getPatterns().size() * 100.0;
+>>>>>>> bdf0f389528c0718ae69b7a46f74fa63a4673d90
         return accuracy;
     }
 

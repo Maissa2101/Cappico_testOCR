@@ -23,7 +23,6 @@ public class App {
 
     static {
         System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
-        System.loadLibrary("opencv_java342");
     }
 
     public static List<HoughLine> applyDetection(Bitmap im) {

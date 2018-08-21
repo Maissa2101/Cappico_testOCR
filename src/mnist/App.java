@@ -27,7 +27,10 @@ public class App extends JFrame {
 
     static {
         System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
+<<<<<<< HEAD
         System.loadLibrary("opencv_java342");
+=======
+>>>>>>> bdf0f389528c0718ae69b7a46f74fa63a4673d90
     }
 
     JFrame frame = new JFrame("hough.App");

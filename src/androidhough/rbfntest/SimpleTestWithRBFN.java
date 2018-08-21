@@ -3,6 +3,10 @@ package androidhough.rbfntest;
 import androidhough.App;
 import androidhough.Bitmap;
 import androidhough.BitmapFactory;
+<<<<<<< HEAD
+=======
+import androidhough.houghtest.AccumulationMatrixExtractor;
+>>>>>>> bdf0f389528c0718ae69b7a46f74fa63a4673d90
 import hough.HoughCircle;
 import hough.HoughLine;
 import org.opencv.core.CvType;
@@ -20,7 +24,6 @@ import java.util.Map;
 public class SimpleTestWithRBFN {
     static {
         System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
-        System.loadLibrary("opencv_java342");
     }
 
     final static String LABELS = "bgm";
@@ -38,9 +41,10 @@ public class SimpleTestWithRBFN {
             outputs.put(LABELS.charAt(i), output);
         }
 
-        String bUri = "/home/radureau/Téléchargements/letters_capicokids_png/b/b_capicokids_1.png";
-        String gUri = "/home/radureau/Téléchargements/letters_capicokids_png/g/g_capicokids_1.png";
-        String mUri = "/home/radureau/Téléchargements/letters_capicokids_png/m/M_capicokids_1.png";
+
+        String bUri = System.getProperty("user.home").concat("/Téléchargements/letters_capicokids_png/b/b_capicokids_1.png");
+        String gUri = System.getProperty("user.home").concat("/Téléchargements/letters_capicokids_png/g/g_capicokids_1.png");
+        String mUri = System.getProperty("user.home").concat("/Téléchargements/letters_capicokids_png/m/M_capicokids_1.png");
 
         Bitmap bBitmap = BitmapFactory.decodeFile(bUri);
         Bitmap gBitmap = BitmapFactory.decodeFile(gUri);
