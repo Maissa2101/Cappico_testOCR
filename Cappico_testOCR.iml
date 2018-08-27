@@ -20,5 +20,14 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" exported="" name="org.encog:encog-core:3.4" level="project" />
+    <orderEntry type="library" name="au.com.bytecode:opencsv:2.4" level="project" />
+    <orderEntry type="library" name="org.slf4j:slf4j-ext:1.7.12" level="project" />
+    <orderEntry type="library" name="org.deeplearning4j:deeplearning4j-core:0.4-rc1.2" level="project" />
+    <orderEntry type="library" name="org.nd4j:nd4j-native-platform:1.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="org.datavec:datavec-api:1.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="org.datavec:datavec-data-image:1.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="org.datavec:datavec-api:1.0.0-SNAPSHOT1" level="project" />
+    <orderEntry type="library" name="org.nd4j:canova-nd4j-image:0.0.0.1" level="project" />
   </component>
 </module>

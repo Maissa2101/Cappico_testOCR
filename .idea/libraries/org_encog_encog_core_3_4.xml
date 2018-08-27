@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="org.encog:encog-core:3.4" type="repository">
+    <properties maven-id="org.encog:encog-core:3.4" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/encog-core-3.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

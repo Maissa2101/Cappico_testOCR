@@ -40,14 +40,24 @@ public class App extends JFrame {
         App app1 = new App();
         App app2 = new App();
         ValidationChar vc = new ValidationChar();
-        List<HoughLine> lineEleve = app1.applyDetectionLine(1, "E1");
-        System.out.println();
-        System.out.println();
-        List<HoughLine> lineRef = app2.applyDetectionLine(2, "E2");
+        List<HoughLine> lineEleve = app1.applyDetectionLine(1, "Amaj");
+        List<Point> intersections = new Lines(lineEleve, loadImage("Amaj")).intersections;
+        System.out.println("nombre de points d'intersection " +intersections.size() +" \n\n");
+        for(Point p : intersections) {
+            System.out.println("pt : (" + p.x + "," + p.y + ")" );
+        }
+
+
+        List<HoughLine> lineRef = app2.applyDetectionLine(2, "c");
+        intersections = new Lines(lineRef, loadImage("c")).intersections;
+        System.out.println("nombre de points d'intersection " +intersections.size() + "\n\n");
+        for(Point p : intersections) {
+            System.out.println("pt : (" + p.x + "," + p.y + ")" );
+        }
         double tauxReussite = app1.compareLetter(lineEleve, lineRef);
         System.out.println(ConsoleColor.RED + "Success rate for lines " + tauxReussite + ConsoleColor.RESET);
-        app1.applyDetectionCircle(1, "E2");
-        app2.applyDetectionCircle(2, "E1");
+        app1.applyDetectionCircle(1, "c");
+        app2.applyDetectionCircle(2, "Amaj");
 
         double tauxReussite2 = compareCircles(app1, app2);
         System.out.println(ConsoleColor.RED + "Success rate for circles " + tauxReussite2 + ConsoleColor.RESET);
@@ -62,6 +72,8 @@ public class App extends JFrame {
             System.out.println(ConsoleColor.CYAN + "Global success rate : " + tauxReussite + ConsoleColor.RESET);
         }
     }
+
+
 
     BufferedImage skeleton(int index) {
         Mat src = loadImageMat("redecoupage" + index);
@@ -94,6 +106,7 @@ public class App extends JFrame {
     void applyAll(int index, List<HoughLine> lines) {
         Mat src = loadImageMat("redecoupage" + index);
         BufferedImage imLine = Mix(src, lines);
+
         save(imLine, "imageAll" + index);
     }
 
@@ -183,7 +196,7 @@ public class App extends JFrame {
         save(imCircle, "testCircle" + index);
     }
 
-    BufferedImage loadImage(String nameFile) {
+    static BufferedImage loadImage(String nameFile) {
 
         try {
             BufferedImage im;
