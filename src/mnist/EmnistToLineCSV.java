@@ -3,19 +3,13 @@ package mnist;
 import androidhough.App;
 import androidhough.Bitmap;
 import androidhough.BitmapFactory;
-<<<<<<< HEAD
-=======
 import androidhough.houghtest.AccumulationMatrixExtractor;
->>>>>>> bdf0f389528c0718ae69b7a46f74fa63a4673d90
 import hough.HoughCircle;
 import hough.HoughLine;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
-<<<<<<< HEAD
-=======
 import rbfn.NP;
->>>>>>> bdf0f389528c0718ae69b7a46f74fa63a4673d90
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

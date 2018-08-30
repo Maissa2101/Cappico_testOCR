@@ -18,7 +18,7 @@ public class App {
 
     private static final String CLASS_NAME = "App";
     public final static int nbLinesToDetect = 6;
-    private static int threshold = 32;
+    private static int threshold = 5;
     private static int precision = 20;
 
     static {

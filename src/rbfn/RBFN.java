@@ -9,24 +9,19 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class RBFN {
 
     static {
-        System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
-<<<<<<< HEAD
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         System.loadLibrary("opencv_java342");
-=======
->>>>>>> bdf0f389528c0718ae69b7a46f74fa63a4673d90
     }
 
     private final int no_of_input;
     private final int no_of_hidden;
     private final int no_of_output;
-    private final Data data;
     private Mat input;
     private final Mat centroid;
     private final Mat sigma;
@@ -35,16 +30,15 @@ public class RBFN {
     private Mat output;
     private final Mat output_bias;
     private Mat actual_target_values;
-    private double total;
     private final double learningRate;
     private double mean_error;
     private Mat error_of_output_layer;
+    private double total;
 
-    public RBFN(int no_of_input, int no_of_hidden, int no_of_output, Data data) {
+    public RBFN(int no_of_input, int no_of_hidden, int no_of_output) {
         this.no_of_input = no_of_input;
         this.no_of_hidden = no_of_hidden;
         this.no_of_output = no_of_output;
-        this.data = data;
         this.input = NP.zeros(this.no_of_input);
         this.centroid = NP.zeros(this.no_of_hidden, this.no_of_input);
         this.sigma = NP.zeros(this.no_of_hidden);
@@ -53,12 +47,36 @@ public class RBFN {
         this.output = NP.zeros(this.no_of_output);
         this.output_bias = NP.zeros(this.no_of_output);
         this.actual_target_values = NP.zeros(this.no_of_output);
-        this.total = 0;
         this.learningRate = 0.0262;
         this.setup_center();
         this.setup_sigma_spread_radius();
         this.set_up_hidden_to_output_weight();
         this.set_up_output_bias();
+    }
+
+    public RBFN(RBFNSavedInstance rbfnSavedInstance) {
+        this(rbfnSavedInstance.no_of_input, rbfnSavedInstance.no_of_hidden, rbfnSavedInstance.no_of_output);
+        RBFNSavedInstance.arrayToMat(rbfnSavedInstance.centroid, this.centroid);
+        RBFNSavedInstance.arrayToMat(rbfnSavedInstance.sigma, this.sigma);
+        RBFNSavedInstance.arrayToMat(rbfnSavedInstance.hidden_to_output_weight, this.hidden_to_output_weight);
+        RBFNSavedInstance.arrayToMat(rbfnSavedInstance.output_bias, this.output_bias);
+    }
+
+    public void save(File outputfile, Mat means, Mat stdDevs, List<Character> labels) throws IOException {
+        RBFNSavedInstance savedInstance = new RBFNSavedInstance();
+        savedInstance.no_of_input = no_of_input;
+        savedInstance.no_of_hidden = no_of_hidden;
+        savedInstance.no_of_output = no_of_output;
+        savedInstance.centroid = RBFNSavedInstance.matToArray(centroid);
+        savedInstance.sigma = RBFNSavedInstance.vectorToArray(sigma);
+        savedInstance.hidden_to_output_weight = RBFNSavedInstance.matToArray(hidden_to_output_weight);
+        savedInstance.output_bias = RBFNSavedInstance.vectorToArray(output_bias);
+        savedInstance.means = RBFNSavedInstance.vectorToArray(means);
+        savedInstance.stdDevs = RBFNSavedInstance.vectorToArray(stdDevs);
+        savedInstance.labels = labels.toArray(new Character[]{});
+        ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(outputfile));
+        output.writeObject(savedInstance);
+        output.close();
     }
 
     /**
@@ -120,36 +138,29 @@ public class RBFN {
         Core.randu(this.output_bias,0.0,1.0);
     }
 
-    public double train(int n) {
-        double error = 0.0;
-        for(int i=0; i<n; i++){
-            error = this.pass_one_epoch();
-            System.out.println("Iteration " + i + " Error " + error);
-        }
+    public double train(Pattern pattern) {
+        Mat input = pattern.getInput();
+        this.actual_target_values = pattern.getOutput();
+        this.pass_input_to_network(input);
+        double error = this.get_error_for_pattern();
+        //System.out.println("pattern " + pattern.getPattern_id() + " Accuracy " + (1-error));
+        this.gradient_descent();
         return error;
     }
 
-    private double pass_one_epoch() {
-<<<<<<< HEAD
-=======
+    public double pass_one_epoch(Data data) {
         System.out.println("pass one epoch");
->>>>>>> bdf0f389528c0718ae69b7a46f74fa63a4673d90
         double all_error = 0.0;
         ArrayList<Integer> all_index = new ArrayList<>();
-        for(int i=0; i<this.data.getPatterns().size(); i++) {
+        for(int i=0; i<data.getPatterns().size(); i++) {
             all_index.add(i);
         }
-        for(int i=0; i<this.data.getPatterns().size(); i++) {
+        for(int i=0; i<data.getPatterns().size(); i++) {
             int random_index = (int)(NP.randomUniform() * all_index.size());
             //Get a random pattern to train
-            Pattern pattern = this.data.getPatterns().get(all_index.get(random_index));
+            Pattern pattern = data.getPatterns().get(all_index.get(random_index));
             all_index.remove(random_index);
-
-<<<<<<< HEAD
-=======
             System.out.println(pattern.getPattern_id());
-
->>>>>>> bdf0f389528c0718ae69b7a46f74fa63a4673d90
             Mat input = pattern.getInput();
             this.actual_target_values = pattern.getOutput();
             this.pass_input_to_network(input);
@@ -158,7 +169,7 @@ public class RBFN {
             all_error += error;
             this.gradient_descent();
         }
-        return all_error / this.data.getPatterns().size();
+        return all_error / data.getPatterns().size();
     }
 
     private void pass_input_to_network(Mat input) {
@@ -181,9 +192,10 @@ public class RBFN {
         for(int i=0; i<this.no_of_output; i++) {
             double output_value = 0;
             for(int j=0; j<this.no_of_hidden; j++) {
-                double newOutput = this.output.get(i,0)[0] + this.hidden_to_output_weight.get(j,i)[0] * this.hidden_output.get(j,0)[0];
-                this.output.put(i,0, newOutput);
+                output_value += this.hidden_to_output_weight.get(j,i)[0] * this.hidden_output.get(j,0)[0];
             }
+            output_value += this.output_bias.get(i,0)[0];//added bias
+            this.output.put(i,0, output_value);
         }
         //Normalize
         for(int i=0; i<this.no_of_output; i++) {
@@ -261,36 +273,23 @@ public class RBFN {
         return this.mean_error;
     }
 
-    public double get_accuracy_for_training() {
-<<<<<<< HEAD
-        int correct = 0;
-=======
+    public double get_accuracy_for_training(Data data) {
         double correct = 0.0;
->>>>>>> bdf0f389528c0718ae69b7a46f74fa63a4673d90
-        for(int i=0; i<this.data.getPatterns().size(); i++){
-            Pattern pattern = this.data.getPatterns().get(i);
+        for(int i=0; i<data.getPatterns().size(); i++){
+            Pattern pattern = data.getPatterns().get(i);
             this.pass_input_to_network(pattern.getInput());
             Mat n_output = this.output;
             Mat act_output = pattern.getOutput();
             int n_neuron = this.get_fired_neuron(n_output);
             int a_neuron = this.get_fired_neuron(act_output);
-            System.out.println(
-                    "predict("+(int)pattern.getInput().get(0,0)[0]
-                    +"xor"+(int)pattern.getInput().get(1,0)[0]+") = " + n_neuron + " ("+a_neuron+")");
-
+            System.out.println("for id " + pattern.getPattern_id() + " predicted " + n_neuron + "(" + data.getLabels().get(n_neuron) + ") and was " + a_neuron + "(" + data.getLabels().get(a_neuron) + ").");
+            System.out.println(matchLabelToPredictionOutput(this.output, data.getLabels()));
             if(n_neuron == a_neuron)
-<<<<<<< HEAD
-                correct += 1;
-        }
-        double accuracy = correct / this.data.getPatterns().size() * 100;
-=======
                 correct += 1.0;
         }
-        double accuracy = correct / this.data.getPatterns().size() * 100.0;
->>>>>>> bdf0f389528c0718ae69b7a46f74fa63a4673d90
+        double accuracy = correct / data.getPatterns().size() * 100.0;
         return accuracy;
     }
-
 
     private int get_fired_neuron(Mat output) {
         int max = 0;
@@ -310,6 +309,24 @@ public class RBFN {
         return this.get_fired_neuron(this.output);
     }
 
+    public static SortedSet<Map.Entry<Character,Double>> matchLabelToPredictionOutput(Mat output, List<Character> orderedLabels) {
+        Map<Character,Double> map = new HashMap<>();
+        int index = 0;
+        for(Character character : orderedLabels) {
+            map.put(character, output.get(index++,0)[0]);
+        }
+        SortedSet<Map.Entry<Character,Double>> sortedEntries = new TreeSet<Map.Entry<Character,Double>>(
+                new Comparator<Map.Entry<Character,Double>>() {
+                    @Override public int compare(Map.Entry<Character,Double> e1, Map.Entry<Character,Double> e2) {
+                        int res = e2.getValue().compareTo(e1.getValue());
+                        return res != 0 ? res : 1;
+                    }
+                }
+        );
+        sortedEntries.addAll(map.entrySet());
+        return sortedEntries;
+    }
+
     public static void main(String... args) {
         Mat v00 = new Mat(2,1,CvType.CV_64F), v01 = new Mat(2,1,CvType.CV_64F),
         v10 = new Mat(2,1,CvType.CV_64F), v11= new Mat(2,1,CvType.CV_64F);
@@ -325,11 +342,13 @@ public class RBFN {
         List<Pattern> patterns = Arrays.asList(p1, p2, p3, p4);
         List<Character> classLabels = Arrays.asList('0', '1');
         Data data = new Data(patterns, classLabels);
-        RBFN rbfn = new RBFN(2, 10, 2, data);
-        double mse = rbfn.train(1500);
-        double accuracy = rbfn.get_accuracy_for_training();
+        RBFN rbfn = new RBFN(2, 10, 2);
+        double mse = 100.0;
+        for(int i=0; i<1500; i++) {
+            mse = rbfn.train(data.getPatterns().get(i%4));
+        }
+        double accuracy = rbfn.get_accuracy_for_training(data);
         System.out.println("Total accuracy is " + accuracy);
         System.out.println("Last MSE " + mse);
     }
-
 }

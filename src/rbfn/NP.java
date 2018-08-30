@@ -16,6 +16,8 @@ public final class NP {
         return new Mat(nrow, ncol, CvType.CV_64F, Scalar.all(0));
     }
 
+    public static Mat minDoubleVector(int length) { return new Mat(length, 1, CvType.CV_64F, Scalar.all(Double.MIN_VALUE)); }
+
     private final static Random randomGenerator = new Random();
     public static double randomUniform() {
         return randomGenerator.nextDouble();

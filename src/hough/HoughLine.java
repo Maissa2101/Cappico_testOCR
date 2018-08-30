@@ -69,10 +69,8 @@ public class HoughLine extends Line2D.Float implements Comparable<HoughLine> {
         return(this.score-o.score);
     }
 
-    public int getScore() {return score;}
-    public double getTheta() {
-        return theta;
-    }
+    public int getScore() { return score; }
+    public double getTheta() { return theta; }
     public double getR() {
         return r;
     }
