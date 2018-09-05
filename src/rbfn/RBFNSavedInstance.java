@@ -5,13 +5,16 @@ import org.opencv.core.Mat;
 import java.io.*;
 
 public class RBFNSavedInstance implements Serializable {
+
+    public static final long serialVersionUID = 1L;
+
     public int no_of_input;
-    public int no_of_hidden;
+    int no_of_hidden;
     public int no_of_output;
-    public double[][] centroid;
-    public double[] sigma;
-    public double[][] hidden_to_output_weight;
-    public double[] output_bias;
+    double[][] centroid;
+    double[] sigma;
+    double[][] hidden_to_output_weight;
+    double[] output_bias;
 
     public Character[] labels;
 
@@ -35,6 +38,9 @@ public class RBFNSavedInstance implements Serializable {
         }
         return mat;
     }
+    public static Mat arrayToMat(double[] array) {
+        return arrayToMat(array, NP.zeros(array.length));
+    }
 
     public static Mat arrayToMat(double[][] array, Mat mat) {
         for(int i = 0; i<array.length; i++) {
@@ -44,6 +50,9 @@ public class RBFNSavedInstance implements Serializable {
             }
         }
         return mat;
+    }
+    public static Mat arrayToMat(double[][] array) {
+        return arrayToMat(array, NP.zeros(array.length, array[0].length));
     }
 
     public static double[][] matToArray(Mat mat) {

@@ -88,4 +88,14 @@ public class RBFNInputUtils {
         input.put(offset + placeForIntersections -1, 0, intersections.size());
         return input;
     }
+
+    public static void printMat(Mat mat) {
+        //System.out.println(mat.rows() + "  ---  " + mat.cols());
+        for(int i=0; i< mat.rows(); i++) {
+            for(int j=0; j< mat.cols(); j++) {
+                System.out.print(mat.get(i,j)[0] + ", ");
+            }
+            System.out.println();
+        }
+    }
 }

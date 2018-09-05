@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static rbfn.RBFNInputUtils.getMeanAndStdDevToNormalizeParameters;
+import static rbfn.RBFNInputUtils.normalizeInputs;
+
 public class FirstTestWithRBFN {
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -53,15 +56,15 @@ public class FirstTestWithRBFN {
 
         Mat[] inputsToNormalize = new Mat[mapFile2Pattern.values().size()];
         mapFile2Pattern.values().stream().map(pattern -> pattern.getInput()).collect(Collectors.toList()).toArray(inputsToNormalize);
-        Mat[] meanAndStdDev = RBFNInputUtils.getMeanAndStdDevToNormalizeParameters(inputsToNormalize);
+        Mat[] meanAndStdDev = getMeanAndStdDevToNormalizeParameters(inputsToNormalize);
         Mat means = meanAndStdDev[0], stdDevs = meanAndStdDev[1];
-        RBFNInputUtils.normalizeInputs(means, stdDevs, inputsToNormalize);
+        normalizeInputs(means, stdDevs, inputsToNormalize);
 
         List<Pattern> patterns = new LinkedList<>(mapFile2Pattern.values());
         List<Character> labels = new ArrayList<>(outputs.keySet());
         Data data = new Data(patterns, labels);
 
-        for(int nTrain = 0; nTrain < 1000; nTrain++) {
+        for(int nTrain = 0; nTrain < 10000; nTrain++) {
             System.out.println("epoch " + nTrain);
             for(Map.Entry<String,Pattern> entry : mapFile2Pattern.entrySet() ){
                 rbfn.train(entry.getValue());

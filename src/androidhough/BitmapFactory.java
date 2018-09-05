@@ -14,6 +14,7 @@ public class BitmapFactory {
       try {
           in = ImageIO.read(new File(fileUri));
       } catch (IOException e) {
+          System.out.println(fileUri);
           e.printStackTrace();
       }
       BufferedImage newImage = new BufferedImage(
