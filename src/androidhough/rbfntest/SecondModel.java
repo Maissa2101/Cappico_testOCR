@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.BinaryOperator;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -164,6 +165,10 @@ public class SecondModel {
         int no_of_output = 2; // 10 if validate, else 01
         int no_of_hidden_node = 30; // arbitrary
         RBFN secondModel = new RBFN(no_of_input, no_of_hidden_node, no_of_output);
+
+        printMat(firstExercisePatterns.get(0).getInput());
+
+        System.exit(0);
 
         for(int nTrain = 0; nTrain < 10000; nTrain++) {
             System.out.println("epoch " + nTrain);
