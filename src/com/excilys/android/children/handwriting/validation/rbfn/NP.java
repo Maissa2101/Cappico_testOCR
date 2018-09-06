@@ -1,4 +1,4 @@
-package rbfn;
+package com.excilys.android.children.handwriting.validation.rbfn;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;

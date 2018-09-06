@@ -1,4 +1,4 @@
-package rbfn;
+package com.excilys.android.children.handwriting.validation.rbfn;
 
 /*
 Manually translated from Python code
@@ -16,7 +16,6 @@ public class RBFN {
 
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        System.loadLibrary("opencv_java342");
     }
 
     private final int no_of_input;

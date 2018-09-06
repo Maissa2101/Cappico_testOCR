@@ -1,8 +1,8 @@
 package androidhough.rbfntest;
 
+import com.excilys.android.children.handwriting.validation.rbfn.*;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import rbfn.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,9 +14,9 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static rbfn.RBFNInputUtils.*;
-import static rbfn.RBFNSavedInstance.arrayToMat;
-import static rbfn.RBFNSavedInstance.load;
+import static com.excilys.android.children.handwriting.validation.rbfn.RBFNInputUtils.*;
+import static com.excilys.android.children.handwriting.validation.rbfn.RBFNSavedInstance.arrayToMat;
+import static com.excilys.android.children.handwriting.validation.rbfn.RBFNSavedInstance.load;
 
 public class SecondModel {
 

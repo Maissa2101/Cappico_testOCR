@@ -1,4 +1,4 @@
-package rbfn;
+package com.excilys.android.children.handwriting.validation.rbfn;
 
 import androidhough.App;
 import androidhough.Bitmap;

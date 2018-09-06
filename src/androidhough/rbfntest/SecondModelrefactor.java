@@ -1,8 +1,8 @@
 package androidhough.rbfntest;
 
+import com.excilys.android.children.handwriting.validation.rbfn.*;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import rbfn.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,10 +19,10 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static rbfn.RBFNInputUtils.getMeanAndStdDevToNormalizeParameters;
-import static rbfn.RBFNInputUtils.normalizeInputs;
-import static rbfn.RBFNInputUtils.printMat;
-import static rbfn.RBFNSavedInstance.load;
+import static com.excilys.android.children.handwriting.validation.rbfn.RBFNInputUtils.getMeanAndStdDevToNormalizeParameters;
+import static com.excilys.android.children.handwriting.validation.rbfn.RBFNInputUtils.normalizeInputs;
+import static com.excilys.android.children.handwriting.validation.rbfn.RBFNInputUtils.printMat;
+import static com.excilys.android.children.handwriting.validation.rbfn.RBFNSavedInstance.load;
 
 public class SecondModelrefactor {
     /* Format du dossier d'image supporté :

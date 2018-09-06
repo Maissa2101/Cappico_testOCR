@@ -4,12 +4,12 @@ import androidhough.App;
 import androidhough.Bitmap;
 import androidhough.BitmapFactory;
 import androidhough.houghtest.AccumulationMatrixExtractor;
+import com.excilys.android.children.handwriting.validation.rbfn.NP;
 import hough.HoughCircle;
 import hough.HoughLine;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
-import rbfn.NP;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

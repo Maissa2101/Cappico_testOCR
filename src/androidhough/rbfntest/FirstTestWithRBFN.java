@@ -1,16 +1,17 @@
 package androidhough.rbfntest;
 
+import com.excilys.android.children.handwriting.validation.rbfn.*;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import rbfn.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static rbfn.RBFNInputUtils.getMeanAndStdDevToNormalizeParameters;
-import static rbfn.RBFNInputUtils.normalizeInputs;
+import static com.excilys.android.children.handwriting.validation.rbfn.RBFNInputUtils.getMeanAndStdDevToNormalizeParameters;
+import static com.excilys.android.children.handwriting.validation.rbfn.RBFNInputUtils.normalizeInputs;
 
 public class FirstTestWithRBFN {
     static {
@@ -64,7 +65,7 @@ public class FirstTestWithRBFN {
         List<Character> labels = new ArrayList<>(outputs.keySet());
         Data data = new Data(patterns, labels);
 
-        for(int nTrain = 0; nTrain < 10000; nTrain++) {
+        for(int nTrain = 0; nTrain < 1000; nTrain++) {
             System.out.println("epoch " + nTrain);
             for(Map.Entry<String,Pattern> entry : mapFile2Pattern.entrySet() ){
                 rbfn.train(entry.getValue());

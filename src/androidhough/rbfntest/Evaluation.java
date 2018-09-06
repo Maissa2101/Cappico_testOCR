@@ -1,16 +1,15 @@
 package androidhough.rbfntest;
 
+import com.excilys.android.children.handwriting.validation.rbfn.*;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import rbfn.RBFN;
-import rbfn.RBFNSavedInstance;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.stream.Stream;
 
-import static rbfn.RBFNInputUtils.*;
-import static rbfn.RBFNSavedInstance.*;
+import static com.excilys.android.children.handwriting.validation.rbfn.RBFNInputUtils.*;
+import static com.excilys.android.children.handwriting.validation.rbfn.RBFNSavedInstance.*;
 
 public class Evaluation {
 
