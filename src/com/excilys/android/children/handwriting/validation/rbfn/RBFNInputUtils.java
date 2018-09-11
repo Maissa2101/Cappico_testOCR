@@ -11,6 +11,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfDouble;
 import org.opencv.core.Point;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class RBFNInputUtils {
@@ -70,6 +71,24 @@ public class RBFNInputUtils {
 
         HoughCircle houghCircle = new HoughCircle();
         houghCircle.run(fileUri, 20);
+        houghCircle.listCenter.sort(new Comparator<Point>() {
+
+            public double dist(Point p) {
+                return Math.sqrt(Math.pow(p.x, 2) + Math.pow(p.y, 2));
+            }
+
+            @Override
+            public int compare(Point o1, Point o2) {
+                double dist = dist(o1) - dist(o2);
+                if(dist > 0) {
+                    return 1;
+                } else if(dist < 0) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
         for(int i=0; i<houghCircle.listRadius.size(); i++){
             input.put(offset + i*3,0, houghCircle.listRadius.get(i));
             input.put(offset + i*3+1,0, houghCircle.listCenter.get(i).x);
