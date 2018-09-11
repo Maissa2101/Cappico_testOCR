@@ -11,6 +11,7 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/*.xml
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
@@ -106,3 +107,8 @@ hs_err_pid*
 # End of https://www.gitignore.io/api/java,intellij
 
 RBNF.iml
+*.png
+*.jpg
+*.jpeg
+*.rbfn
+

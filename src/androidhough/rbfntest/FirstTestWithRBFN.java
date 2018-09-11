@@ -51,7 +51,6 @@ public class FirstTestWithRBFN {
                 Pattern pattern = new Pattern(RBFNInputUtils.lastPatternId++, input, outputs.get(label));
                 mapFile2Pattern.put(fileUri, pattern);
                 System.out.println("\t" + fileUri);
-                break;
             }
         }
 

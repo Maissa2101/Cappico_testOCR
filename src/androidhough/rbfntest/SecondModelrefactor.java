@@ -81,14 +81,14 @@ public class SecondModelrefactor {
 
         imagefileInputMap.replaceAll((imageFilePath, input) -> firstModel.evalAndGetWeights(input));
 
-        /*Mat[] buffer = imagefileInputMap.values().toArray(new Mat[]{});
+        Mat[] buffer = imagefileInputMap.values().toArray(new Mat[]{});
         Mat[] meanAndStdDev = getMeanAndStdDevToNormalizeParameters(buffer);
         Mat means = meanAndStdDev[0], stdDevs = meanAndStdDev[1];
-        normalizeInputs(means, stdDevs, buffer);*/
+        normalizeInputs(means, stdDevs, buffer);
 
         int no_of_input = firstModelInstance.no_of_output;
         int no_of_output = 2; // 10 if validate, else 01
-        int no_of_hidden_node = 30; // arbitrary
+        int no_of_hidden_node = 300; // arbitrary
         RBFN secondModel = new RBFN(no_of_input, no_of_hidden_node, no_of_output);
 
         Mat OUTPUT_VALIDATE = NP.zeros(2); OUTPUT_VALIDATE.put(0,0,1);
@@ -118,6 +118,9 @@ public class SecondModelrefactor {
         Data data = new Data(patterns, labels);
         double accuracy = secondModel.get_accuracy_for_training(data);
         System.out.println("Accuracy for training data : " + accuracy + ".");
+
+        File savedModel = new File("savedSecondModel.rbfn");
+        secondModel.save(savedModel, means, stdDevs, labels);
 
     }
 

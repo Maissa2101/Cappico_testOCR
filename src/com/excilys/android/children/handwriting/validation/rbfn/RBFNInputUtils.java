@@ -23,12 +23,11 @@ public class RBFNInputUtils {
     public final static int placeToSpecifyHowManyWereDetected = 1;
     public final static int nbCirclesToDetect = 3;
     public final static int placeForLines = App.nbLinesToDetect * 2 + placeToSpecifyHowManyWereDetected;
-    public final static int nbIntersectionsToKeep = App.nbLinesToDetect;
-    public final static int placeForIntersections = nbIntersectionsToKeep * 2 + placeToSpecifyHowManyWereDetected;
+    public final static int placeForIntersections = placeToSpecifyHowManyWereDetected;
     public final static int placeForCircles = nbCirclesToDetect * 3 +  placeToSpecifyHowManyWereDetected;
-    public final static int nInput = placeForLines + placeForCircles + nbIntersectionsToKeep;
+    public final static int nInput = placeForLines + placeForCircles + placeForIntersections;
 
-    public final static int nHiddenLayer = nInput * 5; // arbitrary
+    public final static int nHiddenLayer = nInput * 2; // arbitrary
 
     public static void normalizeInputs(Mat mean, Mat stdDev, Mat... inputs) {
         for(Mat input : inputs) {
@@ -79,13 +78,16 @@ public class RBFNInputUtils {
 
         offset = placeForLines + placeForCircles;
 
+
+        int nbIntersections = 0;
         List<Point> intersections = new Lines(houghLines, SCALED_WIDTH_IN_PX, SCALED_HEIGHT_IN_PX).intersections;
         for(int i=0; i<intersections.size(); i++){
             Point intersection = intersections.get(i);
-            input.put(offset + i*2,0, intersection.x);
-            input.put(offset + i*2+1,0, intersection.y);
+            if (intersection.x >= 0 && intersection.x <= SCALED_WIDTH_IN_PX && intersection.y >= 0 && intersection.y <= SCALED_HEIGHT_IN_PX) {
+                nbIntersections++;
+            }
         }
-        input.put(offset + placeForIntersections -1, 0, intersections.size());
+        input.put(offset + placeForIntersections -1, 0, nbIntersections);
         return input;
     }
 
