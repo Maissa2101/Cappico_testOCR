@@ -23,14 +23,13 @@ public class RBFNInputUtils {
 
     public final static int placeToSpecifyHowManyWereDetected = 1;
     public final static int nbCirclesToDetect = 3;
-    public final static int placeForLines = App.nbLinesToDetect * 2 + placeToSpecifyHowManyWereDetected;
+    public final static int placeForLines = App.nbLinesToDetect * 3 + placeToSpecifyHowManyWereDetected;
     public final static int nbIntersectionsToKeep = App.nbLinesToDetect;
     public final static int placeForIntersections = nbIntersectionsToKeep * 2 + placeToSpecifyHowManyWereDetected;
     public final static int placeForCircles = nbCirclesToDetect * 3 +  placeToSpecifyHowManyWereDetected;
     public final static int nInput = placeForLines + placeForCircles + nbIntersectionsToKeep;
 
-    public final static int nHiddenLayer = nInput * 5; // arbitrary
-
+    public final static int nHiddenLayer = nInput * 2;
     public static void normalizeInputs(Mat mean, Mat stdDev, Mat... inputs) {
         for(Mat input : inputs) {
             Core.subtract(input, mean, input);
@@ -64,6 +63,7 @@ public class RBFNInputUtils {
         for(int i=0; i<houghLines.size(); i++){
             input.put(i*2,0,houghLines.get(i).getTheta());
             input.put(i*2+1,0,houghLines.get(i).getR());
+            input.put(i*2+2,0,houghLines.get(i).getScore());
         }
         input.put(placeForLines-1,0, houghLines.size());
 
