@@ -11,6 +11,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfDouble;
 import org.opencv.core.Point;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class RBFNInputUtils {
@@ -23,7 +24,7 @@ public class RBFNInputUtils {
     public final static int placeToSpecifyHowManyWereDetected = 1;
     public final static int nbCirclesToDetect = 3;
     public final static int placeForLines = App.nbLinesToDetect * 2 + placeToSpecifyHowManyWereDetected;
-    public final static int placeForIntersections = placeToSpecifyHowManyWereDetected;
+    public final static int placeForIntersections = App.nbLinesToDetect * 2 + placeToSpecifyHowManyWereDetected;
     public final static int placeForCircles = nbCirclesToDetect * 3 +  placeToSpecifyHowManyWereDetected;
     public final static int nInput = placeForLines + placeForCircles + placeForIntersections;
 
@@ -81,10 +82,25 @@ public class RBFNInputUtils {
 
         int nbIntersections = 0;
         List<Point> intersections = new Lines(houghLines, SCALED_WIDTH_IN_PX, SCALED_HEIGHT_IN_PX).intersections;
+        intersections.sort(new Comparator<Point>() {
+
+            public double dist(Point p) {
+                return Math.sqrt(Math.pow(p.x, 2) + Math.pow(p.y, 2));
+            }
+
+            @Override
+            public int compare(Point o1, Point o2) {
+                double dist = dist(o1) - dist(o2);
+
+                return dist > 0 ? 1 : ((dist < 0) ? -1 : 0);
+            }
+        });
         for(int i=0; i<intersections.size(); i++){
             Point intersection = intersections.get(i);
             if (intersection.x >= 0 && intersection.x <= SCALED_WIDTH_IN_PX && intersection.y >= 0 && intersection.y <= SCALED_HEIGHT_IN_PX) {
                 nbIntersections++;
+                input.put(offset + i*2,0, intersection.x);
+                input.put(offset + i*2+1,0, intersection.y);
             }
         }
         input.put(offset + placeForIntersections -1, 0, nbIntersections);
